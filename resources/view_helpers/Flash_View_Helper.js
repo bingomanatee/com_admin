@@ -1,7 +1,7 @@
 var NE = require('nuby-express');
-var _ = require('underscore');
+var _ = require('./../../node_modules/underscore');
 var util = require('util');
-var _s = require('underscore.string');
+var _s = require('./../../node_modules/underscore.string');
 
 var each_msg = '<% md.messages.forEach(function(msg){ %>' +
     '<li><%= msg %></li>' +
