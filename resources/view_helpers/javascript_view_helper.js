@@ -1,7 +1,7 @@
 var NE = require('nuby-express');
 var _ = require('underscore');
 var util = require('util');
-var proper_path = require('support/proper_path');
+var proper_path = require('./../../node_modules/support/proper_path');
 
 
 var _js_view = new NE.helpers.View( {
