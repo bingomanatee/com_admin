@@ -1,0 +1,26 @@
+{
+    "method":"get",
+
+    "route":"*/config_templates",
+
+    "javascript":[
+        {
+            "/js/libs":[
+                "underscore/underscore-min.js",
+                "backbone/backbone.js",
+                "handlebars/handlebars-1.0.0.beta.6.js"
+            ]
+        },
+
+        "/js/admin/config_templates/ct.js"
+    ],
+
+    "static":[
+        {
+            "name":"config_template_admin_js",
+            "path":"ct_js",
+            "prefix":"/js/admin/config_templates"
+        }
+    ]
+
+}

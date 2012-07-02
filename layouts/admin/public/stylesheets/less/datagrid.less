@@ -1,0 +1,367 @@
+@dg_padding: 4px;
+@base_color: rgb(255, 175, 25);
+@dg_row_bg: lighten(@base_color, 30%);// rgb(255, 216, 65);
+@dg_head_bg: @base_color;
+@dg_head_bg_lt: lighten(@dg_head_bg, 50%);
+@dg_head_bg_dk: desaturate(darken(@dg_head_bg, 40%), 20%);
+@dg_txt_head: black;
+
+@dg_hover: yellow;
+@dg_hover_active: rgb(204,255,0);
+@dg_hover_txt: black;
+
+@dg_tr_active: rgb(225, 255, 255);
+@dg_tr_active_color: rgb(0, 12, 204);
+
+@sm_font_size: 80%;
+@dg_head_field_color: lighten(@dg_row_bg, 10%);
+@dg_head_field_border: (@dg_head_bg_dk);
+
+@dg_body_border: lighten(@dg_head_bg, 20%);
+@dg_odd_lighten: 5%;
+@dg_head_border_strong: darken(@dg_row_bg, 50%);
+
+@dbb_control_desat: 100%;
+@dg_button_active: rgb(255, 204, 50);
+@dg_button_active_dk: 10%;
+@dg_button_txt: rgb(100, 100, 100);
+@dg_button_txt_active: rgb(0,0,0);
+
+@df_label_color: rgb(120, 120,120);
+@df_input_border: rgb(150, 150, 150);
+@df_padding: 0.5em;
+@df_input_width: 16em;
+
+@dg_ctl_btn: lighten(@dg_head_bg, 20%);
+@dg_ctl_btn_color: white;
+
+.dg_head {
+    background-color: @dg_head_bg;
+    font-weight: bold;
+    padding-right: @dg_padding * 2;
+    color: black;
+    border-bottom-color: @dg_head_border_strong;
+    text-align: left;
+}
+
+form.dialog_form {
+    padding: 1em;
+    text-align: left;
+    td {
+        padding: 0px;
+        vertical-align: top;
+    }
+
+    label {
+        width: 8em;
+        color: @df_label_color;
+        display: block;
+        text-align: right;
+        padding: @df_padding;
+        padding-right: 1em;
+    }
+
+    input[type="text"], select {
+        color: black;
+        -webkit-appearance: none;
+        border: none;
+        border-bottom: 1px solid @df_input_border;
+        width: @df_input_width;
+        padding: @df_padding;
+        margin-bottom: 0.5em;
+        background-color: white;
+        .border-radius(0px);
+    }
+
+    select {
+        -webkit-appearance: none;
+        border-bottom: 2px solid darken(@df_input_border, 20%);
+        width: @df_input_width;
+        background-image: ~"url(/admin/img/select_arrow.gif)";
+        background-repeat: no-repeat;
+        background-position: right center;
+
+    }
+
+    button {
+        .border-radius(0.25em);
+        .inset-box-shadow(-1px, -1px, 4px, rgba(0,0, 0, 0.5));
+        border: 1px solid rgb(102, 102, 102);
+        min-width: @df_input_width/2;
+        padding: @df_padding;
+        min-width: 6em;
+        background-color: rgb(204, 204, 100);
+        font-weight: bold;
+        margin-right: 0px;
+        text-shadow: 1px 1px 4px #FFF;
+        filter: "dropshadow(color=#FFF, offx=-1, offy=-1)";
+
+    }
+
+    button.delete {
+
+        background-color: rgb(255, 153, 153);
+    }
+}
+
+.dg_btn {
+    font-size: @sm_font_size;
+    font-weight: bold;
+    padding: 0.25em 0.5em;
+    border: none;
+}
+
+.icon {
+    float: left;
+    width: 16px;
+    height: 16px;
+    margin: 0em 0.5em 0em 0em;
+    display: block;
+    background-color: none;
+    border: none;
+}
+.border-radius(@radius: 5px) {
+    -webkit-background-clip: padding-box;
+    -webkit-border-radius: @radius;
+    -moz-background-clip: padding-box;
+    -moz-border-radius: @radius;
+    border-radius: @radius;
+    background-clip: padding-box;
+}
+
+.multi-border-radius(@topLeft: 5px, @topRight: 5px, @bottomRight: 5px, @bottomLeft: 5px) {
+    -webkit-border-top-left-radius: @topLeft;
+    -webkit-border-top-right-radius: @topRight;
+    -webkit-border-bottom-right-radius: @bottomRight;
+    -webkit-border-bottom-left-radius: @bottomLeft;
+    -moz-border-radius-topleft: @topLeft;
+    -moz-border-radius-topright: @topRight;
+    -moz-border-radius-bottomright: @bottomRight;
+    -moz-border-radius-bottomleft: @bottomLeft;
+    border-top-left-radius: @topLeft;
+    border-top-right-radius: @topRight;
+    border-bottom-right-radius: @bottomRight;
+    border-bottom-left-radius: @bottomLeft;
+}
+
+.vertical-gradient(@start: #000, @stop: #FFF) {
+    background: (@start + @stop) / 2;
+    background: -webkit-gradient(linear, left top, left bottom, from(@start), to(@stop));
+    background: -moz-linear-gradient(center top, @start 0%, @stop 100%);
+    background: -moz-gradient(center top, @start 0%, @stop 100%);
+}
+
+.vertical-3-gradient(@start: #000, @mid: #999, @stop: #FFF) {
+    background: @mid;
+    background: -o-linear-gradient(top, @start 0%, @mid 50%, @stop 100%);
+    background: -webkit-linear-gradient(top, @start 0%, @mid 50%, @stop 100%);
+    background: -moz-linear-gradient(center top, @start 0%, @mid 50%, @stop 100%);
+    background: -moz-gradient(center top, @start 0%, @mid 50%,  @stop 100%);
+    background: linear-gradient(center top, @start 0%, @mid 50%, @stop 100%);
+}
+
+.box-shadow(@horizontal: 0px, @vertical: 1px, @blur: 2px, @color: #CCC) {
+    -webkit-box-shadow: @horizontal @vertical @blur @color;
+    -moz-box-shadow: @horizontal @vertical @blur @color;
+    box-shadow: @horizontal @vertical @blur @color;
+}
+
+.inset-box-shadow(@horizontal: 0px, @vertical: 1px, @blur: 2px, @color: #CCC) {
+    -webkit-box-shadow: inset @horizontal @vertical @blur @color;
+    -moz-box-shadow: inset @horizontal @vertical @blur @color;
+    box-shadow: inset @horizontal @vertical @blur @color;
+}
+
+.row_hover {
+    color: @dg_hover_txt;
+    background-color: @dg_hover;
+}
+.row_hover_active {
+    color: @dg_hover_txt !important;
+    background-color: @dg_hover_active !important;
+}
+
+#maincolumn {
+
+    table.datagrid {
+        color: black;
+        .controls {
+        }
+
+        font-size: 105%;
+        font-family: 'Karla', sans-serif;
+
+        th {
+            padding: @dg_padding;
+        }
+
+        thead {
+            th {
+                border-bottom: 1px solid (@dg_head_bg + @dg_head_bg_dk)/2 !important;
+                .dg_head
+            }
+        }
+
+        thead td.controls {
+            .vertical-3-gradient( @dg_head_bg_lt, (@dg_head_bg_lt + (3 * @dg_head_bg))/ 4, @dg_head_bg);
+            font-weight: bold;
+            color: @dg_txt_head;
+            .multi-border-radius(8px, 8px, 0px, 0px );
+            padding: 0.5em 1.5em;
+
+            button {
+                background-color: saturate(@dg_ctl_btn, 30%);
+                .dg_btn;
+                margin: 0.5em 1em;
+                .border-radius(3px);
+            }
+            button:hover {
+                background-color: lighten(@dg_ctl_btn, 20%);
+            }
+
+            input[type="text"] {
+                background-color: @dg_head_field_color;
+                border: 1px solid @dg_head_field_border;
+            }
+        }
+
+        tfoot {
+            th {
+                border-top: 1px solid (@dg_head_bg + 2 * @dg_head_bg_lt)/3;
+                .dg_head
+            }
+        }
+
+        tfoot td.controls {
+            .vertical-3-gradient( @dg_head_bg,  (@dg_head_bg_dk + (3 * @dg_head_bg))/ 4, @dg_head_bg_dk);
+            font-weight: bold;
+            color: @dg_txt_head;
+            .multi-border-radius( 0px, 0px, 8px, 8px);
+
+            button {
+                background-color: saturate(@dg_ctl_btn, 30%);
+                .dg_btn;
+                margin: 0.5em 1em;
+                .border-radius(3px);
+            }
+            button:hover {
+                background-color: lighten(@dg_ctl_btn, 20%);
+            }
+        }
+
+        tbody {
+
+            tr.active td {
+                background-color: @dg_tr_active !important;
+                color: @dg_tr_active_color;
+            }
+
+            tr.active:nth-child(odd) {
+                td {
+                    background-color: @dg_tr_active !important;
+                    color: @dg_tr_active_color;
+                }
+            }
+
+            tr:hover, tr:nth-child(odd):hover {
+                td, td.control {
+                    .row_hover
+                }
+            }
+
+            tr.active:hover{
+                td, td.control {
+                    .row_hover_active ;
+                }
+            }
+
+            tr.active:nth-child(odd):hover {
+                td, td.control {
+                    .row_hover_active ;
+                }
+            }
+
+            tr {
+
+                td {
+                    padding: @dg_padding;
+                    background-color: @dg_row_bg;
+                    padding-right: @dg_padding * 4;
+
+                }
+
+
+                td.control {
+                    max-width: 5em;
+                    white-space: nowrap;
+                    padding: 3px;
+                    background-color: desaturate(@dg_row_bg, @dbb_control_desat);
+
+                    button {
+                        background-color: transparent;
+                        border: none;
+                        .dg_btn;
+                        color: @dg_button_txt
+                    }
+
+                    button:hover {
+                        color: @dg_button_txt_active;
+                        background-color: @dg_button_active;
+                        border: 1px solid darken(@dg_button_active, @dg_button_active_dk);
+                    }
+
+                    input[type="button"] .icon, button .icon {
+                        background-image: url(/css/custom-theme/images/ui-icons_222222_256x240.png);
+                        .icon
+                    }
+
+
+                    input[type="button"].edit .icon, button.edit .icon {
+                        background-position: -176px -112px;
+                    }
+
+                    input[type="button"].up .icon, button.up .icon {
+                        background-position: 0 -16px;
+                    }
+
+                    input[type="button"].down .icon, button.down .icon {
+                        background-position: -64px -16px;
+                    }
+                }
+            }
+
+            tr:nth-child(odd) td {
+                background-color: lighten(@dg_row_bg, @dg_odd_lighten);
+            }
+
+            tr:nth-child(odd) td.control {
+                background-color: desaturate(lighten(@dg_row_bg, @dg_odd_lighten), @dbb_control_desat)
+            }
+
+td.id_value {
+    a {
+        text-decoration: none;
+    }
+}
+
+        }
+
+    }
+
+}
+
+@media screen and (max-width: 720px) {
+    #maincolumn {
+        table.datagrid {
+            font-size: 70%;
+        }
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    #maincolumn {
+        table.datagrid {
+            font-size: 85%;
+        }
+    }
+}

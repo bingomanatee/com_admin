@@ -1,0 +1,132 @@
+<div id="config_template_list">
+    <table class="datagrid" style="width: 100%">
+        <thead>
+        <tr>
+            <td colspan="109" class="controls">
+                Search <input type="text" value="" class="search_field"/>
+            </td>
+        </tr>
+        <tr>
+            <th><input type="checkbox" name="menus[]" class="check_all" value="all"/></th>
+            <th class="id_sort">ID</th>
+            <th class="compoennt_sort">Component</th>
+            <th class="name_sort">Name</th>
+            <th class="type_sort">Type</th>
+            <th>Constraint(s)</th>
+            <th>&nbsp;</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+        <tfoot>
+        <tr>
+            <th><input type="checkbox" name="menus[]" class="check_all" value="all"/></th>
+            <th class="id_sort">ID</th>
+            <th class="compoennt_sort">Component</th>
+            <th class="name_sort">Name</th>
+            <th class="type_sort">Type</th>
+            <th>Constraint(s)</th>
+            <th>&nbsp;</th>
+        </tr>
+        <tr>
+            <td colspan="10" class="controls">
+                <button class="checked">Alter Checked Items...</button>
+
+                <button class="add">Add Config</button>
+                <div class="on_checked" style="display: none">
+                    <button class="delete">Delete</button>
+                </div>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+
+<script id="config_list_template" type="text/x-handlebars-template">
+    <td><input type="checkbox" name="menus[]" value="{{ _id }}"/></td>
+    <td class="id_value" id_value="{{ _id }}">
+        <a href="#" title="{{id_display _id }}">{{id_short _id }} </a>
+    </td>
+    <td> {{ component }}</td>
+    <td>{{ name }}</td>
+    <td>{{ data_type }}</td>
+    <td>Constraints</td>
+    <td class="control">
+        <button class="edit"><span class="icon"></span> Edit</button>
+    </td>
+
+</script>
+
+<span id="add_config">
+
+ </span>
+
+<span id="edit_config">
+
+ </span>
+
+<script id="add_config_form" type="text/x-handlebars-template">
+    <form class="dialog_form">
+
+        <table>
+            <tr>
+                <td><label>Name</label></td>
+                <td><input name="name" type="text" value=""/></td>
+            </tr>
+            <tr>
+                <td><label>Component</label></td>
+                <td><input name="component" type="text" value=""/></td>
+            </tr>
+            <tr>
+                <td><label>Data Type</label></td>
+                <td><select name="data_type">
+                    <option value="string">String</option>
+                    <option value="number">Number</option>
+                    <option value="date">Date</option>
+                </select></td>
+            </tr>
+            <tr>
+                <td><label>Default</label></td>
+                <td><input name="default" type="text" value=""/></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td>
+                    <button class="new" >Add Config</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</script>
+
+<script id="edit_config_form" type="text/x-handlebars-template">
+    <form class="dialog_form">
+
+        <table>
+            <tr>
+                <td><label>Name</label></td>
+                <td><input name="name" type="text" value="{{ name }}"/></td>
+            </tr>
+            <tr>
+                <td><label>Component</label></td>
+                <td><input name="component" type="text" value="{{ component }}"/></td>
+            </tr>
+            <tr>
+                <td><label>Data Type</label></td>
+                <td><select name="data_type">
+                    {{data_type_options data_type }}
+                </select></td>
+            </tr>
+            <tr>
+                <td><label>Default</label></td>
+                <td><input name="default" type="text" value="{{ default }}"/></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td>
+                    <button class="update" >Update Config</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</script>

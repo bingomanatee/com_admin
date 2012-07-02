@@ -1,7 +1,6 @@
 @import '../../stylesheets/reset.css';
-@import '../../stylesheets/demo.css';
+@import '../../stylesheets/style.css';
 @import '../../stylesheets/less/grid.less';
-
 
 //////////
 // GRID //
@@ -12,31 +11,23 @@
 @column-width: 60;
 @gutter-width: 20;
 
-// Uncomment the definition below for a percentage-based layout
-// @total-width: 100%;
+// Remove the definition below for a pixel-based layout
+@total-width: 100%;
 
 
 ////////////
 // LAYOUT //
 ////////////
 
-// center the contents
-div.center {
-	width: 960px;
-	margin: 0 auto;
-	overflow: hidden;
-}
-
 // header
 header#top {
-	.column(12);
-	margin-bottom: 1em;
+    margin-bottom: 1em;
 }
 
-// main and sidebar
+// main column & sidebar
 #maincolumn {
-	.column(9);
+    .column(9);
 }
 #sidebar {
-	.column(3);
+    .column(3);
 }

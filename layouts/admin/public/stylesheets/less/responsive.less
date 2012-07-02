@@ -1,7 +1,7 @@
-@import '../../stylesheets/reset.css';
-@import '../../stylesheets/demo.css';
-@import '../../stylesheets/less/grid.less';
-
+//@import '/admin/stylesheets/reset.css';
+//@import '/admin/stylesheets/demo.css';
+@import 'grid.less';
+@import 'layout.less';
 
 //////////
 // GRID //
@@ -14,8 +14,24 @@
 
 // Remove the definition below for a pixel-based layout
 @total-width: 100%;
+@headline_fonts: 'Paytone One', 'Arial Black' sans-serif;
+@headline_color: black;
 
+// v. colors, styles
+@hc_grid: "/admin/img/honeycomb_sm.png";
+@hc_grid_s: "/admin/img/honeycomb_xsm.png";
+@hc_color: #FFE1CC;
 
+.bg(@img, @bg_color ){
+    background-color: @bg_color;
+    background-image: ~"url('@{img}')";
+
+}
+.img_size(@size) {
+    -moz-transform:scale(@size);
+    -webkit-transform:scale(@size);
+    transform:scale(@size);
+}
 ////////////
 // LAYOUT //
 ////////////
@@ -23,6 +39,31 @@
 // header
 header#top {
 	margin-bottom: 1em;
+    .bg(@hc_grid, @hc_color);
+    height: 100px;
+    padding: 0.5em;
+    h1 {
+        float: left;
+        margin: 0px;
+        padding-left: 2em;
+        text-shadow: 4px 4px 6px white;
+        filter: "dropshadow(color=white, offx=4, offy=4)";
+        font-size: 250%;
+        font-family: @headline_fonts;
+        color: @headline_color;
+        a {
+            text-decoration: none;
+            color: @headline_color;
+        }
+    }
+    #logo {
+        float: left;
+        display: inline-block;
+        background-image: ~"url(/admin/img/nu-bee_s150.png)";
+        background-repeat: no-repeat;
+        width: 150px;
+        height: 101px;
+    }
 }
 
 // main column & sidebar
@@ -39,4 +80,19 @@ header#top {
 		.column(12);
 		margin-bottom: 1em;
 	}
+
+    header#top {
+        .bg(@hc_grid_s, @hc_color);
+        h1 {
+            font-size: 150%;
+            text-shadow: 2px 2px 3px white;
+            filter: "dropshadow(color=white, offx=2, offy=2)";
+        }
+        #logo {
+            background-image: ~"url(/admin/img/nu-bee_s80.png)";
+            width: 80px;
+            height: 54px;
+        }
+        height: 60px;
+    }
 }

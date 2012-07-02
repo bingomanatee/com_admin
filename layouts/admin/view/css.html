@@ -8,10 +8,8 @@ if (typeof css == 'object') {
     }
 %>
 <link rel="stylesheet" href="<%= css.path %>" type="<%= css.type %>" media="<%= css.media %>"/>
-<% } else { %>
-if (/less$/i.test(css){ %>
+<% } else if (/less$/i.test(css)){ %>
 <link rel="stylesheet" href="<%= css %>" type="text/less" media="screen"/>
 <% } else { %>
 <link rel="stylesheet" href="<%= css %>"/>
-<% } %>
 <% } %>

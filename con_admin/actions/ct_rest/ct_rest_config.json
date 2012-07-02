@@ -1,0 +1,15 @@
+{
+    "method":"*",
+
+    "get_route":[
+        "*/config_template",
+        "*/config_template/:id"
+    ],
+
+    "post_route": "*/config_template",
+
+    "put_route": "*/config_template/:id",
+
+    "delete_route": "*/config_template/:id"
+
+}

@@ -1,0 +1,92 @@
+@hl_color: rgb(255, 255, 255);
+@body_bg: black;
+@sm_link_color: rgb(250, 255, 102);
+@sm_bull_color: rgb(100, 80, 0);
+@body_txt: white;
+
+.hl {
+    color: @hl_color;
+    margin: 0.33em 0em;
+    padding: 0em;
+    font-size: 150%;
+}
+
+html {
+    background-color: @body_bg;
+    color: @body_txt;
+    body {
+        background-color: @body_bg;
+        h1 {
+            .hl
+        }
+
+        h2 {
+
+            .hl
+
+        }
+
+        h3 {
+            .hl
+        }
+        article {
+
+            h1 {
+                .hl
+            }
+
+            h2 {
+
+                .hl
+
+            }
+
+            h3 {
+                .hl
+            }
+        }
+
+        section#sidebar {
+
+            div.panel {
+                a {
+                    text-decoration: none;
+                    color: @sm_link_color;
+                    font-weight: bold;
+                    font-size: 125%;
+                }
+                ul {
+                    margin: 0px;
+                    padding-left: 1.5em;
+                    li {
+                        color: @sm_bull_color;
+                        margin-left: 0.5em;
+                        padding-left: 0em;
+                        font-size: 80%;
+                    }
+                }
+            }
+
+        }
+    }
+}
+
+
+
+@media screen and (max-width: 720px) {
+    html {
+        body {
+
+            section#sidebar {
+
+                div.panel {
+                    ul {
+                        li {
+                            display: inline-block;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
