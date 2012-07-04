@@ -10,11 +10,12 @@ var constraint = new mongoose.Schema({
 });
 
 var schema = new mongoose.Schema({
-    component: {type: String, required: true, validate: /[a-z_]+/},
-    name: {type: String, required: true, validate: /[a-z_]+/},
+    src: {type: String, required: true},
+    class: {type: String, required: true},
+    name: {type: String, required: true},
     data_type: {type: String, enum: ['number', 'date', 'daterange', 'string' ]},
-    constraint: [constraint],
     default: mongoose.Schema.Types.Mixed,
+    value: mongoose.Schema.Types.Mixed,
     deleted: {type: Boolean, default: false}
 });
 
@@ -27,7 +28,7 @@ schema.statics.inactive = function (cb) {
 }
 
 var _model = mm.create(schema,
-    {name:"config_template", type:"model"}
+    {name:"cc_options", type:"model"}
 );
 
 module.exports = function () {

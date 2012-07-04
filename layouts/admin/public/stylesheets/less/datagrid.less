@@ -89,13 +89,17 @@ form.dialog_form {
         border: 1px solid rgb(102, 102, 102);
         min-width: @df_input_width/2;
         padding: @df_padding;
+        background-color: @dg_row_bg;
         min-width: 6em;
-        background-color: rgb(204, 204, 100);
         font-weight: bold;
         margin-right: 0px;
         text-shadow: 1px 1px 4px #FFF;
         filter: "dropshadow(color=#FFF, offx=-1, offy=-1)";
 
+    }
+
+    button[type="submit"]{
+        background-color: rgb(204, 204, 100);
     }
 
     button.delete {

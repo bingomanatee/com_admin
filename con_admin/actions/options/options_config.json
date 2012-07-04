@@ -1,7 +1,7 @@
 {
     "method":"get",
 
-    "route":"*/config_templates",
+    "route":"*/comp/options",
 
     "javascript":[
         {
@@ -12,14 +12,14 @@
             ]
         },
 
-        "/js/admin/config_templates/ct.js"
+        "/js/admin/comp/options.js"
     ],
 
     "static":[
         {
-            "name":"config_template_admin_js",
-            "path":"ct_js",
-            "prefix":"/js/admin/config_templates"
+            "name":"act_options.js",
+            "path":"js",
+            "prefix":"/js/admin/comp/"
         }
     ]
 

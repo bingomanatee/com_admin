@@ -1,0 +1,146 @@
+<div id="config_template_list">
+    <table class="datagrid" style="width: 100%">
+        <thead>
+        <tr>
+            <td colspan="109" class="controls">
+                Search <input type="text" value="" class="search_field"/>
+            </td>
+        </tr>
+        <tr>
+            <th class="id_sort">ID</th>
+            <th class="class_sort">Class</th>
+            <th class="src_sort">Source</th>
+            <th class="name_sort">Name</th>
+            <th class="type_sort">Type</th>
+            <th class="default_sort">Default</th>
+            <th class="value_sort">Value</th>
+            <th>&nbsp;</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+        <tfoot>
+        <tr>
+            <th class="id_sort">ID</th>
+            <th class="class_sort">Class</th>
+            <th class="src_sort">Source</th>
+            <th class="name_sort">Name</th>
+            <th class="type_sort">Type</th>
+            <th class="default_sort">Default</th>
+            <th class="value_sort">Value</th>
+            <th>&nbsp;</th>
+        </tr>
+        <tr>
+            <td colspan="10" class="controls">&nbsp;
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+
+<script id="config_list_template" type="text/x-handlebars-template">
+    <td class="id_value" id_value="{{ _id }}">
+        <a href="#" title="{{id_display _id }}">{{id_short _id }} </a>
+    </td>
+    <td>{{ class }}</td>
+    <td> {{ src }}</td>
+    <td>{{ name }}</td>
+    <td>{{ data_type }}</td>
+    <td>{{ default }}</td>
+    <td style="overflow: hidden" title={{value}}> {{ value }}</td>
+    <td class="control">
+        <button class="edit"><span class="icon"></span> Edit</button>
+    </td>
+
+</script>
+
+<span id="config_forms">
+
+ </span>
+
+<span id="edit_config">
+
+ </span>
+
+<script id="edit_config_form" type="text/x-handlebars-template">
+    <form class="dialog_form">
+
+        <table>
+            <tr>
+                <td><label>Source</label></td>
+                <td class="static">{{class}}: {{ src }}</td>
+            </tr>
+            <tr>
+                <td><label>Name</label></td>
+                <td class="static">{{ name }}</td>
+            </tr>
+            <tr>
+                <td><label>Data Type</label></td>
+                <td class="static"> {{data_type }}</td>
+            </tr>
+            <tr>
+                <td><label>Value</label></td>
+                <td><input name="value" type="text" value="{{ value }}"/>
+                <td>
+                    <button onclick="reset_form_value(this, 'value', '{{ default }}'); return false; ">Reset</button>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td colspan="2"> Default value: &quot;{{ default }}&quot;
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td colspan="2" class="controls">
+                    <button class="update">Update Config</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</script>
+
+
+<script id="config_form_template" type="text/x-handlebars-template">
+    <div class="accordion">
+
+        {{#each forms }}
+        <h3><a href="#">Options for {{type }} &quot;{{ src }}&quot; </a></h3>
+
+        <div>
+            <form class="dialog_form">
+
+                <input type="hidden" name="src" value="{{ src }}"/>
+
+                <input type="hidden" name="class" value="{{ class }}"/>
+                <table>
+
+                    {{#each fields }}
+                    <tr>
+                        <td><label>{{ name }}</label></td>
+                        <td>
+                            <input type="text" name="{{ name }}" value="{{ value }}"/>
+                        </td>
+                        <td>
+                            <button onclick="reset_form_value(this, '{{name}}', '{{ default }}'); return false; ">
+                                Reset
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td colspan="2"> Default value: &quot;{{ default }}&quot;
+                        </td>
+                    </tr>
+                    {{/each }}
+                    <tr>
+                        <td>
+                            <button type="submit">Update</button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        {{/each}}
+    </div>
+</script>

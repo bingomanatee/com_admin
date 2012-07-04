@@ -39,11 +39,11 @@ var NE_ADMIN = {
                 return new Handlebars.SafeString(link_render(menus));
             });
 
-            var panel_template = '<div class="panel" id="panel_{{ panel }}">' +
+            var panel_template = '<div class="panel" id="panel_{{ panel }}"><ul>' +
                 '{{#loop menus }}' +
-                '{{panel_menus _each_item }}' +
+                '<li>{{panel_menus _each_item }}</li>' +
                 '{{/loop }}' +
-                '</div>';
+                '</ul></div>';
             this._panel_render = Handlebars.compile(panel_template);
             var self = this;
 

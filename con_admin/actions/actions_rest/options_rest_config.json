@@ -1,0 +1,15 @@
+{
+    "method":"*",
+
+    "get_route":[
+        "*/comp/option",
+        "*/comp/option/:id"
+    ],
+
+    "post_route": "*/comp/option",
+
+    "put_route": "*/comp/option/:id",
+
+    "delete_route": "*/comp/option/:id"
+
+}
