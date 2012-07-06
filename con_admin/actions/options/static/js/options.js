@@ -7,15 +7,15 @@ $(function () {
     function _deserialize(fd) {
         var out = {};
 
-        _.each(fd, function(field){
-           if (out[field.name]){
-               if (!_.isArray(out[field.name])){
-                   out[field.name] = [out[field.name]];
-               }
-               out[field.name].push(field.value);
-           } else {
-               out[field.name] = field.value;
-           }
+        _.each(fd, function (field) {
+            if (out[field.name]) {
+                if (!_.isArray(out[field.name])) {
+                    out[field.name] = [out[field.name]];
+                }
+                out[field.name].push(field.value);
+            } else {
+                out[field.name] = field.value;
+            }
 
         });
 
@@ -24,6 +24,27 @@ $(function () {
 
     Handlebars.registerHelper('id_short', function (id) {
         return id.slice(0, 8) + '...'
+    });
+
+    var text_input = Handlebars.compile('<input type="text" name="{{ name }}" value="{{ value }}" class="input_mono wide" />');
+    var textarea_input = Handlebars.compile('<textarea name="{{name }}" class="input_mono wide">{{ value }}</textarea>');
+    Handlebars.registerHelper('input', function (type, name, value) {
+
+        switch (type) {
+            case 'string':
+                return new Handlebars.SafeString(text_input({name:name, value:value}));
+                break;
+
+            case 'text':
+                return new Handlebars.SafeString(textarea_input({name:name, value:value}));
+                break;
+
+        }
+        return new Handlebars.SafeString(text_input({name:name, value:value}));
+    })
+
+    Handlebars.registerHelper('sq', function (t) {
+        return t.replace(/'/g, '\\\'');
     });
 
     Handlebars.registerHelper('id_display', function (id) {
@@ -101,13 +122,13 @@ $(function () {
             var self = this;
             this.comp_value = 'name';
             this.collection.url = REST_ROOT;
-            this.collection.comparator = function(opt){
+            this.collection.comparator = function (opt) {
                 return opt.get(self.comp_value);
             };
             this.update_coll(false);
         },
 
-        _form_cordian: null,
+        _form_cordian:null,
 
         render:function () {
 
@@ -125,8 +146,8 @@ $(function () {
                 self.render_config(m);
             }, this);
 
-            if (!this._form_cordian){
-                this._form_cordian = new Forms_View({model: this.collection});
+            if (!this._form_cordian) {
+                this._form_cordian = new Forms_View({model:this.collection});
             }
 
             this._form_cordian.render();
@@ -137,55 +158,55 @@ $(function () {
             var v = new RowView({
                 model:config
             });
-            $('tbody', this.$el).append(v.render().el);
+            $('tbody.insert', this.$el).before(v.render().el);
         },
 
         events:{
             'click button.add':'add_config',
-            'click td.id_sort': 'sort_by_id',
-            'click td.name_sort': 'sort_by_name',
-            'click td.type_sort': 'sort_by_type',
-            'click td.src_sort': 'sort_by_src',
-            'click td.default_sort': 'sort_by_default',
-            'click td.value_sort': 'sort_by_value'
+            'click td.id_sort':'sort_by_id',
+            'click td.name_sort':'sort_by_name',
+            'click td.type_sort':'sort_by_type',
+            'click td.src_sort':'sort_by_src',
+            'click td.default_sort':'sort_by_default',
+            'click td.value_sort':'sort_by_value'
         },
 
-        sort_by_id: function(){
+        sort_by_id:function () {
             this.comp_value = 'id';
             var self = this;
             this.update_coll(false)
         },
 
 
-        sort_by_type: function(){
+        sort_by_type:function () {
             this.comp_value = 'type';
             var self = this;
             this.update_coll(false)
         },
 
 
-        sort_by_value: function(){
+        sort_by_value:function () {
             this.comp_value = 'value';
             var self = this;
             this.update_coll(false)
         },
 
 
-        sort_by_src: function(){
+        sort_by_src:function () {
             this.comp_value = 'src';
             var self = this;
             this.update_coll(false)
         },
 
 
-        sort_by_name: function(){
+        sort_by_name:function () {
             this.comp_value = 'name';
             var self = this;
             this.update_coll(false)
         },
 
 
-        sort_by_default: function(){
+        sort_by_default:function () {
             this.comp_value = 'default';
             var self = this;
             this.update_coll(false)
@@ -194,7 +215,7 @@ $(function () {
         _ct_form:false,
 
         add_config:function () {
-         //   console.log('add config');
+            //   console.log('add config');
             if (!this._new_ct_form) {
                 this._new_ct_form = new AddConfigView({configs_view:this}).render();
             }
@@ -229,10 +250,8 @@ $(function () {
     var row_tmpl = Handlebars.compile(tmpl);
 
     var RowView = Backbone.View.extend({
-        tagName:'tr',
-        className:'',
         template:row_tmpl,
-
+        tagName:'tbody',
         render:function () {
             this.$el.html(this.template(this.model.toJSON()));
             return this;
@@ -266,48 +285,47 @@ $(function () {
 
     var Forms_View = Backbone.View.extend({
 
-        tagName: 'div',
+        tagName:'div',
 
-        el: $("#config_forms"),
+        el:$("#config_forms"),
 
-        template: Handlebars.compile(ftmpl),
+        template:Handlebars.compile(ftmpl),
 
-        render: function(){
+        render:function () {
             var self = this;
-            var params = {forms: []};
+            var params = {forms:[]};
 
-            this.model.forEach(function(config){
-                var form = _.find(params.forms, function(form){
+            this.model.forEach(function (config) {
+                var form = _.find(params.forms, function (form) {
                     return (form.src == config.get('src')) && (form.class == config.get('class'));
                 });
 
-                var field = {name: config.get('name'), type: config.get('type'), default: config.get('default')};
+                var field = config.toJSON();
 
-                if (form){
+                if (form) {
                     form.fields.push(field);
                 } else {
-                    params.forms.push({src: config.get('src'), class: config.get('class'), fields: [field]});
+                    params.forms.push({src:config.get('src'), class:config.get('class'), fields:[field]});
                 }
             });
 
             this.$el.html(this.template(params));
 
-            $('form', this.$el).each(function(i, f){
-                console.log('augmenting form ', f);
-                $(f).submit(function(d){
+            $('form', this.$el).each(function (i, f) {
+                $(f).submit(function (d) {
                     console.log('submitting form ', d);
                     var data = _deserialize($(f).serializeArray());
                     console.log('data: ', data);
-                    var context = {src: data.src, class: data.class};
+                    var context = {src:data.src, class:data.class};
                     delete data.src;
                     delete data.class;
-                    _.each(data, function(value, key){
+                    _.each(data, function (value, key) {
                         var matches = configs_view.collection.where({
-                           src: context.src,
-                            class: context.class,
-                            name: key
+                            src:context.src,
+                            class:context.class,
+                            name:key
                         });
-                        if (matches.length > 0){
+                        if (matches.length > 0) {
                             matches[0].set('value', value);
                             matches[0].save();
                         }
@@ -323,7 +341,6 @@ $(function () {
 
     })
 
-    console.log('forms view: ', Forms_View);
 
     /* -------------- EDIT VIEW ------------- */
     /*
@@ -335,23 +352,23 @@ $(function () {
 
 
         events:{
-         //   'click button.delete':'delete_config',
-           'click button.update':'update_config'
+            //   'click button.delete':'delete_config',
+            'click button.update':'update_config'
         },
 
-       /*  delete_config:function (e) {
-            var self = this;
-            this.model.destroy({
-                success:function () {
-                    configs_view.update_coll(false, function () {
-                        $(self.$el).dialog('close');
-                        configs_view.render();
-                    });
-                }
-            });
-            this.show_dialog(false);
-            return false;
-        }, */
+        /*  delete_config:function (e) {
+         var self = this;
+         this.model.destroy({
+         success:function () {
+         configs_view.update_coll(false, function () {
+         $(self.$el).dialog('close');
+         configs_view.render();
+         });
+         }
+         });
+         this.show_dialog(false);
+         return false;
+         }, */
 
         update_config:function (e) {
             var fd = $('form', this.$el).serializeArray();
@@ -396,11 +413,12 @@ $(function () {
 
 })
 
-function reset_form_value(b, name, val){
+function reset_form_value(b, name, val) {
     console.log('rfv:', b, name, val);
 
     var f = b.form;
 
     $('input[name="' + name + '"]', f).val(val);
+    $('textarea[name="' + name + '"]', f).val(val);
     return false;
 }

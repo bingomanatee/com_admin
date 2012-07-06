@@ -11,10 +11,10 @@ module.exports = {
         var  ln = rs.action.get_config('layout_name', 'NO LAYOUT')
 
         if (ln == 'NO LAYOUT' ){
-            console.log(' .... no layout for css: %s', ln);
+            //console.log(' .... no layout for css: %s', ln);
             var layout = false;
         } else {
-            console.log('input layout name:  css %s', ln);
+           // console.log('input layout name:  css %s', ln);
             var layout = rs.framework.get_resource('layout', ln);
         }
 
@@ -23,7 +23,7 @@ module.exports = {
         if (layout && layout.config.css){
             css = css.concat(layout.config.css);
         } else if (layout){
-            console.log('no css in layout: %s', util.inspect(layout.config));
+          //  console.log('no css in layout: %s', util.inspect(layout.config));
         }
 
         input.css = _.uniq(css);

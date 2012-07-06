@@ -13,8 +13,9 @@ var schema = new mongoose.Schema({
     src: {type: String, required: true},
     class: {type: String, required: true},
     name: {type: String, required: true},
-    data_type: {type: String, enum: ['number', 'date', 'daterange', 'string' ]},
+    data_type: {type: String, enum: ['number', 'date', 'daterange', 'string', 'text']},
     default: mongoose.Schema.Types.Mixed,
+    notes: String,
     value: mongoose.Schema.Types.Mixed,
     deleted: {type: Boolean, default: false}
 });

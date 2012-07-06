@@ -13,10 +13,10 @@ var _js_view = new NE.helpers.View( {
       var  ln = rs.action.get_config('layout_name', 'NO LAYOUT')
 
         if (ln == 'NO LAYOUT' ){
-            console.log(' .... no layout: %s', ln);
+          //  console.log(' .... no layout: %s', ln);
             var layout = false;
         } else {
-            console.log('input layout name: %s', ln);
+        //    console.log('input layout name: %s', ln);
             var layout = rs.framework.get_resource('layout', ln);
         }
 
@@ -24,11 +24,11 @@ var _js_view = new NE.helpers.View( {
 
         if (layout && layout.config.javascript){
             js = js.concat(layout.config.javascript);
-            console.log('layout JS: %s', util.inspect(js));
+        //    console.log('layout JS: %s', util.inspect(js));
         }
         js = _parse_js(rs.action.get_config('javascript', js, true));
 
-        console.log('final JS: %s', util.inspect(js));
+      //  console.log('final JS: %s', util.inspect(js));
         input.javascript = js;
 
         js = input.javascript_head ? input.javascript_head : [];

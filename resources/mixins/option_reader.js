@@ -1,13 +1,14 @@
 var NE = require('nuby-express');
 var util = require('util');
 var _DEBUG = false;
+var _DEBUG_OPTIONS = false;
 var _ = require('underscore');
 var Gate = NE.deps.support.Gate;
 
 /* ***************** CLOSURE ******************* */
 
 function _refresh_options(frame, src) {
-    var opts = src.get_config('options');
+    var opts = src.direct_config('options');
     if (opts && _.isArray(opts)) {
         opts = _.map(opts, function (saved_option) {
             var out = {src:src.name, class:src.CLASS};
@@ -25,27 +26,43 @@ module.exports = {
     init:function (frame, cb) {
         var config_file_options = [];
 
-        frame.get_controllers().forEach(function (con) {
+        var controllers = frame.frame_controllers();
+
+       if (_DEBUG)  console.log('%s controllers found', controllers.length);
+
+        controllers.forEach(function (con) {
+            if (_DEBUG){
+                console.log('LOOKING FOR OPTIONS IN CONTROLLER "%s"', con.name);
+            }
             var ro = _refresh_options(frame, con);
+            if (_DEBUG){
+                console.log('.... found %s', util.inspect(ro));
+            }
             if (ro && _.isArray(ro)){
                 config_file_options = config_file_options.concat(ro);
             }
         })
 
-        frame.get_components().forEach(function (con) {
-            var ro = _refresh_options(frame, con);
+        frame.get_components().forEach(function (com) {
+            if (_DEBUG){
+                console.log('LOOKING FOR OPTIONS IN COMPONENT "%s"', com.name);
+            }
+            var ro = _refresh_options(frame, com);
+            if (_DEBUG){
+                console.log('.... found %s', util.inspect(ro));
+            }
             if (ro && _.isArray(ro)){
                 config_file_options = config_file_options.concat(ro);
             }
         })
 
 
-        if (_DEBUG) console.log('inspecting cc options %s', util.inspect(config_file_options));
+        if (_DEBUG || _DEBUG_OPTIONS) console.log('inspecting cc options %s', util.inspect(config_file_options));
 
         var options_model = frame.get_resource('model', 'cc_options');
 
         var gate = new Gate(cb, 'loading cc options %s', util.inspect(config_file_options));
-        gate.debug = true;
+        gate.debug = false;
 
         options_model.active(function(err, saved_options){
             if (_DEBUG) console.log('saved options: %s', util.inspect(saved_options));
