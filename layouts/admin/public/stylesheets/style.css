@@ -1,4 +1,34 @@
-/* =============================================================================
+#maincolumn section {
+
+    background-color: rgb(51, 51, 51);
+    padding: 2em;
+    margin: -1em;
+
+}
+#maincolumn section section {
+
+    color: black;
+    background-color: rgb(204, 204, 204);
+    margin: 1em 0em;
+    padding: 1em;
+}
+
+#maincolumn section section h1,
+#maincolumn section section h2,
+#maincolumn section section h3,
+#maincolumn section section h4,
+#maincolumn section section h5,
+#maincolumn section section h6 {
+
+    color: black;
+}
+
+#maincolumn section.half {
+    width: 42%;
+    float: left;
+    margin-right: 1em;
+}
+    /* =============================================================================
    HTML5 Boilerplate CSS: h5bp.com/css
    ========================================================================== */
 

@@ -1,8 +1,28 @@
 var NE_ADMIN = {
 
+    link_template:['<a href="{{ link }}">{{ label }}</a>',
+        '{{#loop children }}' ,
+        '{{#if _each_first }}' ,
+        '<ul>' ,
+        '{{/if }}' +
+            '<li>{{panel_menus _each_item }}</li>' ,
+        '{{#if _each_last }}' ,
+        '</ul>' ,
+        '{{/if }}' ,
+        '{{/loop}}'].join("\n"),
+
+    panel_template:'<div class="panel" id="panel_{{ panel }}"><ul>' +
+        '{{#loop menus }}' +
+        '<li>{{panel_menus _each_item }}</li>' +
+        '{{/loop }}' +
+        '</ul></div>',
+
     panel:function (name, selector) {
         if (!this._panel_render) {
             Handlebars.registerHelper("loop", function (array, fn) {
+                if (!array || (!_.isArray(array))){
+                    return '';
+                }
                 var buffer = "";
                 for (var i = 0, j = array.length; i < j; i++) {
                     var item = array[i];
@@ -22,36 +42,19 @@ var NE_ADMIN = {
 
             });
 
-            var link_template = ['<a href="{{ link }}">{{ label }}</a>',
-                '{{#loop children }}' ,
-                '{{#if _each_first }}' ,
-                '<ul>' ,
-                '{{/if }}' +
-                    '<li>{{panel_menus _each_item }}</li>' ,
-                '{{#if _each_last }}' ,
-                '</ul>' ,
-                '{{/if }}' ,
-                '{{/loop}}'].join("\n")
-
-            var link_render = Handlebars.compile(link_template);
+            var link_render = Handlebars.compile(NE_ADMIN.link_template);
 
             Handlebars.registerHelper('panel_menus', function (menus) {
                 return new Handlebars.SafeString(link_render(menus));
             });
 
-            var panel_template = '<div class="panel" id="panel_{{ panel }}"><ul>' +
-                '{{#loop menus }}' +
-                '<li>{{panel_menus _each_item }}</li>' +
-                '{{/loop }}' +
-                '</ul></div>';
-            this._panel_render = Handlebars.compile(panel_template);
-            var self = this;
-
-            $.getJSON('/menu_panel/' + name).success(function (data) {
-                $(selector).html(self._panel_render({panel: name, menus: data}));
-            });
+            this._panel_render = Handlebars.compile(NE_ADMIN.panel_template);
         }
 
+        $.getJSON('/mh/' + name).success(function (data) {
+            console.log('mh data for ', name, data);
+            $(selector).html(NE_ADMIN._panel_render({panel: name, menus: data}));
+        });
     }
 
 }

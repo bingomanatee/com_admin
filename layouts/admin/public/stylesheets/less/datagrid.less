@@ -226,6 +226,14 @@ form.dialog_form {
                 border-bottom: 1px solid (@dg_head_bg + @dg_head_bg_dk)/2 !important;
                 .dg_head
             }
+            h1, h2 {
+                color: black !important;
+                padding: 0px !important;
+                margin: -0.25em;
+                text-align: center !important;
+                font-family: 'Karla', sans-serif !important;
+
+            }
         }
 
         thead td.controls {
@@ -282,107 +290,119 @@ form.dialog_form {
                 color: @dg_tr_active_color;
             }
 
-tr.active:nth-child(odd) {
-    td, th {
-        background-color: @dg_tr_active !important;
-        color: @dg_tr_active_color;
-    }
-}
+            tr.active:nth-child(odd) {
+                td, th {
+                    background-color: @dg_tr_active !important;
+                    color: @dg_tr_active_color;
+                }
+            }
 
-tr:hover, tr:nth-child(odd):hover {
-    td, td.control, th, th.control {
-        .row_hover
-    }
-}
+            tr:hover, tr:nth-child(odd):hover {
+                td, td.control, th, th.control {
+                    .row_hover
+                }
+            }
 
-tr.active:hover {
-    td, td.control, th, th.control {
-        .row_hover_active;
-    }
-}
+            tr.active:hover {
+                td, td.control, th, th.control {
+                    .row_hover_active;
+                }
+            }
 
-tr.active:nth-child(odd):hover {
-    td, td.control, th, th.control {
-        .row_hover_active;
-    }
-}
+            tr.active:nth-child(odd):hover {
+                td, td.control, th, th.control {
+                    .row_hover_active;
+                }
+            }
 
-tr {
+            tr {
 
-    td, th {
-        padding: @dg_padding;
-        background-color: @dg_row_bg;
-        padding-right: @dg_padding * 4;
+                td, th {
+                    padding: @dg_padding;
+                    background-color: @dg_row_bg;
+                    padding-right: @dg_padding * 4;
 
-    }
+                }
 
-    th {
-        background-color: @dg_head_bg;
-        border-right: 1px solid @dg_head_bg_dk;
-        font-weight: bold;
-        text-align: right;
-    }
-    th.mid {
-        border-right: none;
-    }
+                th {
+                    background-color: @dg_head_bg;
+                    border-right: 1px solid @dg_head_bg_dk;
+                    font-weight: bold;
+                    text-align: right;
+                }
+                th.mid {
+                    border-right: none;
+                }
 
-    td.control {
-        max-width: 5em;
-        white-space: nowrap;
-        padding: 3px;
-        background-color: desaturate(@dg_row_bg, @dbb_control_desat);
+                 ul.cells {
+                    padding: 0px;
+                     margin: 0px;
+                    padding-left: 0px;
+                    li {
+                         list-style: none;
+                        margin-left: 0px;
+                        padding: 0px;
+                        white-space: nowrap
+                        }
+                }
 
-        button {
-            background-color: transparent;
-            border: none;
-            .dg_btn;
-            color: @dg_button_txt
+                td.control {
+                    max-width: 5em;
+                    white-space: nowrap;
+                    padding: 3px;
+                    background-color: desaturate(@dg_row_bg, @dbb_control_desat);
+
+                    button {
+                        background-color: transparent;
+                        border: none;
+                        .dg_btn;
+                        color: @dg_button_txt
+                    }
+
+                    button:hover {
+                        color: @dg_button_txt_active;
+                        background-color: @dg_button_active;
+                        border: 1px solid darken(@dg_button_active, @dg_button_active_dk);
+                    }
+
+                    input[type="button"] .icon, button .icon {
+                        background-image: url(/css/custom-theme/images/ui-icons_222222_256x240.png);
+                        .icon
+                    }
+
+                    input[type="button"].edit .icon, button.edit .icon {
+                        background-position: -176px -112px;
+                    }
+
+                    input[type="button"].up .icon, button.up .icon {
+                        background-position: 0 -16px;
+                    }
+
+                    input[type="button"].down .icon, button.down .icon {
+                        background-position: -64px -16px;
+                    }
+                }
+            }
+
+            tr:nth-child(odd) td {
+                background-color: lighten(@dg_row_bg, @dg_odd_lighten);
+            }
+
+            tr:nth-child(odd) td.control {
+                background-color: desaturate(lighten(@dg_row_bg, @dg_odd_lighten), @dbb_control_desat)
+            }
+
+            td.id_value {
+                a {
+                    text-decoration: none;
+                }
+            }
+
         }
 
-        button:hover {
-            color: @dg_button_txt_active;
-            background-color: @dg_button_active;
-            border: 1px solid darken(@dg_button_active, @dg_button_active_dk);
-        }
-
-        input[type="button"] .icon, button .icon {
-            background-image: url(/css/custom-theme/images/ui-icons_222222_256x240.png);
-            .icon
-        }
-
-        input[type="button"].edit .icon, button.edit .icon {
-            background-position: -176px -112px;
-        }
-
-        input[type="button"].up .icon, button.up .icon {
-            background-position: 0 -16px;
-        }
-
-        input[type="button"].down .icon, button.down .icon {
-            background-position: -64px -16px;
-        }
     }
+
 }
-
-tr:nth-child(odd) td {
-    background-color: lighten(@dg_row_bg, @dg_odd_lighten);
-}
-
-tr:nth-child(odd) td.control {
-    background-color: desaturate(lighten(@dg_row_bg, @dg_odd_lighten), @dbb_control_desat)
-}
-
-td.id_value {
-    a {
-        text-decoration: none;
-    }
-}
-
-    }
-
-    }
-
-    }
 
 @media screen and (max-width: 720px) {
     #maincolumn {

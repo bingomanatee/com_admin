@@ -20,7 +20,6 @@
     ],
 
     "css":[
-        "http://fonts.googleapis.com/css?family=Paytone+One|Karla:400,400italic,700,700italic|Arvo:400,700,400italic,700italic",
         "/admin/stylesheets/style.css",
         "/admin/stylesheets/less/grid.less",
         "/admin/stylesheets/less/datagrid.less",
