@@ -43,12 +43,9 @@
 </article>
 <%- partial("js.html", javascript) %>
 <script language="javascript">
-    NE_ADMIN.panel('admin', '#sidebar_menu');
-
-</script>
-<script language="javascript">
     $(
             function () {
+                NE_ADMIN.panel('admin', '#sidebar_menu');
                 var status = null;
             //    console.log('listening to FB');
                 $('body').bind('fb', function () {
@@ -89,17 +86,7 @@
                 })
 
                 $('body').bind('local_user', function(event, user){
-                    var privs = [];
-                    if (user){
-                        if (user.roles && _.isArray(user.roles)){
-                            privs = _.reduce(user.roles, function(local_privs, role){
-                                if (role.tasks){
-                                    return local_privs.concat(role.tasks);
-                                };
-                                return local_privs;
-                            }, []);
-                        }
-                    }
+                    privs = user && user.privs ? user.privs: [];
 
                     if (!_.include(privs, 'admin')){
                         alert('You\'re not an admin, fuck off!');

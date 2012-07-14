@@ -1,8 +1,9 @@
-@hl_color: rgb(255, 255, 255);
+@hl_color: rgb(255, 255, 0);
 @body_bg: black;
-@sm_link_color: rgb(250, 255, 102);
+@sm_link_color: rgb(250, 255, 255);
 @sm_bull_color: rgb(100, 80, 0);
 @body_txt: white;
+@link_color: rgb(255, 255, 204);
 
 .hl {
     color: @hl_color;
@@ -43,6 +44,11 @@ html {
 
             h3 {
                 .hl
+            }
+
+            a, a:link, a:visited {
+                color: @link_color;
+                text-decoration: none;
             }
         }
 
