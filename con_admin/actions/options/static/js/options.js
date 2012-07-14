@@ -272,7 +272,7 @@ $(function () {
         },
 
         edit_config:function (n) {
-            console.log('edit menu: ', n, this, this.model);
+          //  console.log('edit menu: ', n, this, this.model);
             var mfv = new EditConfigView({model:this.model});
             mfv.render();
         }
@@ -313,9 +313,9 @@ $(function () {
 
             $('form', this.$el).each(function (i, f) {
                 $(f).submit(function (d) {
-                    console.log('submitting form ', d);
+                 //   console.log('submitting form ', d);
                     var data = _deserialize($(f).serializeArray());
-                    console.log('data: ', data);
+                  //  console.log('data: ', data);
                     var context = {src:data.src, class:data.class};
                     delete data.src;
                     delete data.class;
@@ -414,7 +414,7 @@ $(function () {
 })
 
 function reset_form_value(b, name, val) {
-    console.log('rfv:', b, name, val);
+   // console.log('rfv:', b, name, val);
 
     var f = b.form;
 

@@ -28,9 +28,12 @@
 
 <!-- Sidebar -->
 <section id="sidebar">
-    <h2>Sidebar</h2>
-&nbsp;
-    <hr/>
+    <div id="fb-user"></div>
+    <fb:login-button onlogin="location.reload()"  onlogout="location.reload()"
+   autologoutlink="true" registration-url="http://<%= helpers.fb_data.domain %>/members_reg">Log
+        In
+    </fb:login-button>
+    <span id="sidebar_menu"></span>
 </section>
 
 
@@ -40,8 +43,74 @@
 </article>
 <%- partial("js.html", javascript) %>
 <script language="javascript">
-    NE_ADMIN.panel('admin', '#sidebar');
+    NE_ADMIN.panel('admin', '#sidebar_menu');
 
 </script>
+<script language="javascript">
+    $(
+            function () {
+                var status = null;
+            //    console.log('listening to FB');
+                $('body').bind('fb', function () {
+                    FB.Event.subscribe('auth.authResponseChange', function(response) {
+                   //     console.log('The status of the session is: ', response.status, '; old status == ', status);
+                        if (status === null){
+                            status = response.status;
+                        } else if (response.status != status){
+                         //   console.log('status change: ', response.status);
+                            status = response.status;
+                            //location.reload();
+                        }
+                    });
+
+                    FB.getLoginStatus(function (res) {
+
+                        if (res.status == 'connected') {
+                            //   console.log('connected_as:', res);
+                            get_local_data(res);
+
+                            FB.api('/me', function (response) {
+                                FB.api('/me/picture', function (pic) {
+
+                                    // console.log('me: ', response, 'pic', pic);
+                                    response.url = pic;
+                                    var ut = Handlebars.compile('<img src="{{url}}" /><br />Welcome {{name }}');
+                                    $('#fb-user').html(ut(response));
+
+                                })
+
+                            });
+
+                        } else {
+                            $('body').trigger('local_user', false);
+                        }
+                    })
+
+                })
+
+                $('body').bind('local_user', function(event, user){
+                    var privs = [];
+                    if (user){
+                        if (user.roles && _.isArray(user.roles)){
+                            privs = _.reduce(user.roles, function(local_privs, role){
+                                if (role.tasks){
+                                    return local_privs.concat(role.tasks);
+                                };
+                                return local_privs;
+                            }, []);
+                        }
+                    }
+
+                    if (!_.include(privs, 'admin')){
+                        alert('You\'re not an admin, fuck off!');
+                        document.location = '/';
+                    }
+                });
+            }
+    )
+</script>
+
+
+<%- helpers.fb() %>
 </body>
 </html>

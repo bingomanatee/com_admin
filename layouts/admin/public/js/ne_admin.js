@@ -52,7 +52,7 @@ var NE_ADMIN = {
         }
 
         $.getJSON('/mh/' + name).success(function (data) {
-            console.log('mh data for ', name, data);
+        //    console.log('mh data for ', name, data);
             $(selector).html(NE_ADMIN._panel_render({panel: name, menus: data}));
         });
     }

@@ -54,11 +54,11 @@ module.exports = {
 
         controllers.forEach(function (con) {
             if (_DEBUG) {
-                console.log('LOOKING FOR OPTIONS IN CONTROLLER "%s"', con.name);
+ // console.log('LOOKING FOR OPTIONS IN CONTROLLER "%s"', con.name);
             }
             var ro = _refresh_options(frame, con);
             if (_DEBUG) {
-                console.log('.... found %s', util.inspect(ro));
+ // console.log('.... found %s', util.inspect(ro));
             }
             if (ro && _.isArray(ro)) {
                 config_file_options = config_file_options.concat(ro);
@@ -67,11 +67,11 @@ module.exports = {
 
         frame.get_components().forEach(function (com) {
             if (_DEBUG) {
-                console.log('LOOKING FOR OPTIONS IN COMPONENT "%s"', com.name);
+ // console.log('LOOKING FOR OPTIONS IN COMPONENT "%s"', com.name);
             }
             var ro = _refresh_options(frame, com);
             if (_DEBUG) {
-                console.log('.... found %s', util.inspect(ro));
+ // console.log('.... found %s', util.inspect(ro));
             }
             if (ro && _.isArray(ro)) {
                 config_file_options = config_file_options.concat(ro);
