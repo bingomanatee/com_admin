@@ -6,6 +6,7 @@
 @dg_head_bg_lt: lighten(@dg_head_bg, 50%);
 @dg_head_bg_dk: desaturate(darken(@dg_head_bg, 40%), 20%);
 @dg_txt_head: black;
+@dg_link_color: rgb(10, 0, 100);
 
 @dg_hover: yellow;
 @dg_hover_active: rgb(204, 255, 0);
@@ -212,6 +213,11 @@ form.dialog_form {
     table.datagrid {
         color: black;
         .controls {
+        }
+
+        a, a:link, a:visited {
+            color: @dg_link_color;
+            text-decoration: none;
         }
 
         font-size: 105%;
