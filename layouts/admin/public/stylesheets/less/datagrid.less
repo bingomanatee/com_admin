@@ -31,6 +31,7 @@
 
 @df_label_color: rgb(120, 120, 120);
 @df_input_border: rgb(150, 150, 150);
+@df_input_border_lt: lighten(@df_input_border, 20%);
 @df_padding: 0.5em;
 @df_input_width: 16em;
 
@@ -62,7 +63,9 @@ form.dialog_form {
         padding: @df_padding;
         padding-right: 1em;
     }
+}
 
+form.dialog_form, table.datagrid, table.datagrid_nh {
     input[type="text"], textarea, select {
         color: black;
         -webkit-appearance: none;
@@ -103,7 +106,9 @@ form.dialog_form {
         background-position: right center;
 
     }
+}
 
+form.dialog_form {
     button {
         .border-radius(0.25em);
         .inset-box-shadow(-1px, -1px, 4px, rgba(0, 0, 0, 0.5));
@@ -126,6 +131,25 @@ form.dialog_form {
     button.delete {
 
         background-color: rgb(255, 153, 153);
+    }
+}
+
+table.datagrid, table.datagrid_nh {
+    input[type="text"], textarea, select {
+        border-top: 1px solid @df_input_border_lt;
+        border-left: 1px solid @df_input_border_lt;
+        border-right: 1px solid @df_input_border_lt;
+        margin: 0.75 * @df_padding
+    }
+
+    tfoot {
+
+        button[type="submit"] {
+            background-color: rgb(204, 255, 100) !important;
+        }
+        button[type="submit"]:hover {
+            background-color: white !important;
+        }
     }
 }
 
@@ -208,9 +232,37 @@ form.dialog_form {
     background-color: @dg_hover_active !important;
 }
 
+.nohover {
+    color: auto;
+    background-color: auto
+}
+
 #maincolumn {
 
     table.datagrid {
+        tbody {
+
+            tr:hover, tr:nth-child(odd):hover {
+            td, td.control, th, th.control {
+            .row_hover
+        }
+        }
+
+        tr.active:hover {
+        td, td.control, th, th.control {
+        .row_hover_active;
+        }
+        }
+
+        tr.active:nth-child(odd):hover {
+        td, td.control, th, th.control {
+        .row_hover_active;
+        }
+
+        }
+    }
+}
+table.datagrid, table.datagrid_nh{
         color: black;
         .controls {
         }
@@ -247,8 +299,8 @@ form.dialog_form {
                  background-color: @dg_head_bg;
                 h2 {
                     font-size: 1.5em;
-                    color: yellow;
-                    text-shadow: 2px 2px 4px black;
+                    color: rgb(25, 0, 80);
+                    text-shadow: 1px 1px 1px white;
                 }
              }
              td.controls {
@@ -313,24 +365,6 @@ form.dialog_form {
                 }
             }
 
-            tr:hover, tr:nth-child(odd):hover {
-                td, td.control, th, th.control {
-                    .row_hover
-                }
-            }
-
-            tr.active:hover {
-                td, td.control, th, th.control {
-                    .row_hover_active;
-                }
-            }
-
-            tr.active:nth-child(odd):hover {
-                td, td.control, th, th.control {
-                    .row_hover_active;
-                }
-            }
-
             tr {
 
                 td, th {
@@ -345,6 +379,8 @@ form.dialog_form {
                     border-right: 1px solid @dg_head_bg_dk;
                     font-weight: bold;
                     text-align: right;
+                    white-space: nowrap;
+                    padding-right: @dg_padding * 2;
                 }
                 th.mid {
                     border-right: none;
@@ -390,6 +426,10 @@ form.dialog_form {
                         .icon
                     }
 
+                    input[type="button"].view .icon, button.view .icon {
+                        background-position: -160px -112px;
+                    }
+
                     input[type="button"].edit .icon, button.edit .icon {
                         background-position: -176px -112px;
                     }
@@ -404,12 +444,16 @@ form.dialog_form {
                 }
             }
 
-            tr:nth-child(odd) td {
-                background-color: lighten(@dg_row_bg, @dg_odd_lighten);
-            }
-
-            tr:nth-child(odd) td.control {
-                background-color: desaturate(lighten(@dg_row_bg, @dg_odd_lighten), @dbb_control_desat)
+            tr:nth-child(odd){
+                td {
+                    background-color: lighten(@dg_row_bg, @dg_odd_lighten);
+                }
+                th {
+                    background-color: lighten(@dg_head_bg, @dg_odd_lighten);
+                }
+                td.control {
+                    background-color: desaturate(lighten(@dg_row_bg, @dg_odd_lighten), @dbb_control_desat)
+                }
             }
 
             td.id_value {

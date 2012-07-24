@@ -12,24 +12,30 @@ module.exports = {
 
     /* *************** RESPONSE METHODS ************** */
 
-    validate:function (rs) {
+    on_validate:function (rs) {
 
+
+        var self = this;
         // note - "can" is a feature of the member module.
         // While the member module is not attached to the admin module
         // it is fairly safe to assume you won't be using the admin module without ACL and membership.
         if (this.can && _.isFunction(this.can)){
             if (!this.can(rs, [ 'admin'])) {
-               return this.on_validate_error(rs, 'you are not authorized to administer this site');
+                    return    this.on_validate_error(rs, 'you are not authorized to administer this site');
             }
         }
         this.on_input(rs);
     },
 
+    _on_validate_error_go: '/',
+
     on_input:function (rs) {
+        var self = this;
         this.on_process(rs, rs.req_props);
     },
 
     on_process:function (rs, input) {
+        var self = this;
         this.on_output(rs, input);
     }
 

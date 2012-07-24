@@ -17,6 +17,16 @@ module.exports = {
     /* *************** DELETE RESPONSE METHODS ************** */
 
     on_delete_validate: function(rs){
+
+        // note - "can" is a feature of the member module.
+        // While the member module is not attached to the admin module
+        // it is fairly safe to assume you won't be using the admin module without ACL and membership.
+        if (this.can && _.isFunction(this.can)){
+            if (!this.can(rs, [ 'admin'])) {
+               return this.on_validate_error(rs, 'you are not authorized to administer this site');
+            }
+        }
+
         if (rs.req_props.id){
             this.on_delete_input(rs);
         } else {
@@ -54,6 +64,16 @@ module.exports = {
     /* *************** GET RESPONSE METHODS ************** */
 
     on_get_validate:function (rs) {
+
+        // note - "can" is a feature of the member module.
+        // While the member module is not attached to the admin module
+        // it is fairly safe to assume you won't be using the admin module without ACL and membership.
+        if (this.can && _.isFunction(this.can)){
+            if (!this.can(rs, [ 'admin'])) {
+                this.on_validate_error(rs, 'you are not authorized to administer this site');
+            }
+        }
+
         if (rs.req_props.id) {
             this.on_get_one_input(rs);
         } else {

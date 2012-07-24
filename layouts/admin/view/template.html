@@ -16,7 +16,7 @@
     <!-- Scripts -->
     <%- partial("js.html", javascript_head) %>
 
-    <!--[if lt IE 9]><script type="text/javascript" src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <!--[if lt IE 9]><script type="text/javascript" src="http://html5shiv.googlecode.com/svn/trunk/html5.js" defer="defer"></script><![endif]-->
 </head>
 <body class="admin">
 
@@ -79,6 +79,7 @@
                             });
 
                         } else {
+                            get_local_data(false);
                             $('body').trigger('local_user', false);
                         }
                     })
