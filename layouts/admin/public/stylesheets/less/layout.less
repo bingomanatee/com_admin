@@ -30,6 +30,12 @@ html {
         h3 {
             .hl
         }
+
+        *.ui-widget, section .ui-widget {
+            h1, h2, h3 {
+                color: black;
+            }
+        }
         article {
 
             h1 {
@@ -49,6 +55,30 @@ html {
             a, a:link, a:visited {
                 color: @link_color;
                 text-decoration: none;
+            }
+
+
+            *.ui-widget, section .ui-widget {
+                h1, h2, h3 {
+                    color: black;
+                }
+            }
+        }
+
+        article#maincolumn {
+
+            section.preview,
+            section section.preview {
+                padding: 2em;
+                color: black;
+                background-color: white;
+                border: 1px solid black;
+            }
+
+            *.ui-widget, section .ui-widget {
+                h1, h2, h3 {
+                    color: black;
+                }
             }
         }
 

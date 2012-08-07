@@ -426,6 +426,10 @@ table.datagrid, table.datagrid_nh{
                         .icon
                     }
 
+                    input[type="button"].approve .icon, button.approve .icon {
+                        background-position: -64px -144px;
+                    }
+
                     input[type="button"].view .icon, button.view .icon {
                         background-position: -160px -112px;
                     }
@@ -441,6 +445,13 @@ table.datagrid, table.datagrid_nh{
                     input[type="button"].down .icon, button.down .icon {
                         background-position: -64px -16px;
                     }
+
+                    input[type="button"].delete, button.delete {
+                        color: rgb(204, 0,0);
+                    }
+                    input[type="button"].delete .icon, button.delete .icon {
+                        background-position: -96px -128px;
+                    }
                 }
             }
 
@@ -454,7 +465,14 @@ table.datagrid, table.datagrid_nh{
                 td.control {
                     background-color: desaturate(lighten(@dg_row_bg, @dg_odd_lighten), @dbb_control_desat)
                 }
+                tr:nth-child(odd){
+                    td {
+                        background-color:  lighten(@dg_row_bg, @dg_odd_lighten * 2);
+                    }
+                }
             }
+
+
 
             td.id_value {
                 a {
