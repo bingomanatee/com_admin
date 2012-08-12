@@ -1,0 +1,70 @@
+<h1>Model &quot;<%= model.name %>&quot;</h1>
+
+<form method="post" id="edit_form">
+    <table class="datagrid_nh" width="100%">
+        <thead>
+        <tr>
+            <td class="controls" colspan="2">
+                <h2>Query Records</h2>
+            </td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th><label>Criteria</label></th>
+            <td>
+                <textarea name="crit" style="height: 4em; width: 90%">{"deleted": {"$ne": true }}</textarea>
+            </td>
+        </tr>
+        <tr>
+            <th><label>Sort</label></th>
+            <td><input type="text" name="sort" value="name"/></td>
+        </tr>
+        <tr>
+            <th><label>Limit</label></th>
+            <td><select name="limit">
+                <option value=1>1</option>
+                <option value=10>10</option>
+                <option value=100>100</option>
+                <option value=1000>1000</option>
+                <option value=0>NO LIMIT</option>
+            </select>
+                <small>Be VERY CAREFUL about ulimited queries!</small>
+            </td>
+        </tr>
+        <tr>
+            <th><label>Result</label></th>
+            <td>
+                <textarea name="result" id="query_result" style="width: 90%; height: 30em">
+
+                </textarea>
+            </td>
+        </tr>
+
+        <tfoot>
+        <tr>
+            <td class="controls" colspan="2">
+                <button type="submit">Poll</button>
+            </td>
+        </tr>
+        </tfoot>
+        </tbody>
+    </table>
+</form>
+
+<script language="javascript">
+    $('#edit_form').submit(function(e){
+        var action = '/admin/comp/model/<%= model.name %>/query';
+        console.log(e);
+        var data = $(e.target).serializeArray();
+        var data_obj = {};
+        _.each(data, function(d){
+            data_obj[d.name] = d.value;
+        })
+        console.log(data_obj);
+        $.post( action, data_obj).success(function(data){
+            $('#query_result').val(JSON.stringify(data));
+        })
+        return false;
+    });
+</script>

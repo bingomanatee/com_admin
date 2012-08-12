@@ -1,0 +1,29 @@
+{
+
+<% if (routes.get && (!routes.post) && (!routes.delete) & (!routes.put)){ %>
+    "method": "get",
+    <% } else { %>
+    "method" : "*",
+<% }  %>
+
+<% if (routes.get) { %>
+
+    "get_route": "<%= route.get %>",
+
+<% } %>
+<% if (routes.post) { %>
+
+    "post_route": "<%= route.post %>",
+
+<% } %>
+<% if (routes.put) { %>
+
+    "put_route": "<%= route.put %>",
+
+<% } %>
+<% if (routes.delete) { %>
+
+    "delete_route": "<%= route.delete %>",
+<% } %>
+    "a": true
+}

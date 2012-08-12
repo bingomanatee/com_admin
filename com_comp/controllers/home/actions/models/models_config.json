@@ -1,0 +1,7 @@
+{
+
+    "method" : "get",
+
+    "route": "*/models"
+
+}

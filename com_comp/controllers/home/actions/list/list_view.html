@@ -1,0 +1,105 @@
+<h1>Routes, by component</h1>
+<div id="accordian">
+    <% components.forEach(function(component){ %>
+    <h3><a href="#"> <%= component.name %> : <%= component.path.slice(component.parent.path.length) %>
+    </a>
+    </h3>
+
+    <div style="padding: 0px;">
+        <table class="datagrid" style="width: 100%">
+            <thead>
+            <tr>
+                <th>Controller</th>
+                <th>Action</th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <%
+            var view_field = 0;
+            component.get_controllers().forEach(function(con, con_index){
+            %>
+            <% con.get_actions().forEach(function(act){ %>
+            <tr>
+
+                <th style="border: none"><%= con.name %></th>
+                <th style="text-align: left">
+                    <b><%= act.name %></b>
+                </h>
+                <td colspan="4">&nbsp;</td>
+            </tr>
+            <% act.get_routes(true ).forEach(function(route){ %>
+            <tr>
+                <td align="right"><b>
+                    <%= route.method %>
+                </b>
+                </td>
+                <td width="100%">
+                    <%= route.route %>
+                </td>
+                <% if (/:(_)?id/.test(route.route)) { %>
+                <td style="padding: 0px">
+                    <input id="view_<%= view_field %>" type="text" value="_id" class="id"
+                           onblur="view_values[$(this).attr('id')] = $(this).val()"
+                            />
+                </td>
+                <td>
+                    <button onclick="go_view('<%- route.route %>', <%= view_field %>)">View</button>
+                </td>
+                <% ++view_field } else { %>
+                <td>&nbsp;</td>
+                <td>
+                    <button onclick="document.location='<%= route.route %>'; return false">View</button>
+                </td>
+                <% } %>
+
+                <td class="control">
+                    <button onclick="document.location='/admin/menus?new_menu_link=<%= route.route %>'; return false"
+                            >Menu</button>
+                </td>
+                <td class="control">
+                    <button class="new" onclick="document.location='/admin/comp/new?controller=<%= con.path.substr(component.parent.path.length) %>'; return false">
+                        <span class="icon"></span>
+                        New
+                        Action</button>
+                </td>
+            </tr>
+
+            <% }) %>
+            <% }) %>
+            <% }) %>
+
+
+            </tbody>
+
+        </table>
+    </div>
+    <% }) %>
+
+</div>
+<style>
+   .admin input.id {
+        font-size: 70%;
+        width: 8em;
+        font-family: Monaco, "Courier New", "Courier", monospace;
+        padding: 1px; margin: 0px;
+    }
+
+    .path i {
+        color: magenta
+    }
+</style>
+<script type="text/javascript">
+    $('#accordian').accordion({autoHeight: false});
+    var view_values = {}
+    function go_view(path, n) {
+        var id = view_values['view_' + n];
+        path = path.replace(/:(_)?id/, id);
+        document.location = path;
+        return false;
+    }
+</script>

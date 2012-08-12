@@ -1,0 +1,42 @@
+<section class="clearfix">
+    <h1>Make action for Controller <%= controller.name %></h1>
+
+    <p><b>Path:</b> &quot; <%= controller.path %>&quot;</p>
+
+    <form method="post">
+        <input type="hidden" name="new_action[controller]" value="<%= controller.path %>" />
+        <section class="half clearfix">
+            <h2>Existing Actions</h2>
+            <ul>
+                <% controller.get_actions().forEach(function(action){ %>
+                <li><%= action.path.split('/').pop() %></li>
+                <% }) %>
+            </ul>
+
+            <p>You will have to restart the app to load the new action.</p>
+        </section>
+        <section class="half">
+            <h2>New Action</h2>
+
+            <p><label>Name</label> <input name="new_action[name]"/></p>
+            <fieldset>
+                <legend>Method</legend>
+                <p>route prefix: <%= controller.get_config('route_prefix') %></p>
+                <% 'get,post,put,delete'.split(',').forEach(function(type){
+                %>
+                <p><label><input type="checkbox" name="new_action[routes][]"
+                    <% if (type == 'get'){ %> checked="checked" <% } %>
+                    value="<%= type %>" /><%= type %></label>
+                    <input type="text" name="new_action[route][<%= type %>]" value="*/"/>
+                <p/>
+                <% }) %>
+                <p><label><input name="new_action[REST]" type="checkbox" /> REST action</label></p>
+                <p><label>REST model name:</label> <input type="text" name="new_action[model]" /></p>
+
+
+            </fieldset>
+            <p class="controls"><button type="submit">Create</button></p>
+        </section>
+    </form>
+
+</section>

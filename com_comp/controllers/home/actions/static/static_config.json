@@ -1,0 +1,27 @@
+{
+
+
+    "method":"get",
+
+
+    "static":[
+        {
+            "path":"js",
+            "prefix":"/js/admin/static"
+        }
+    ],
+
+    "route":"*/static",
+
+    "javascript_head":[
+        "/js/admin/static/static.js",
+        {
+            "/js/libs/angular":[
+                "angular-1.0.1.js",
+                "angular-resource-1.0.1.js"
+            ]
+        }
+    ]
+
+
+}

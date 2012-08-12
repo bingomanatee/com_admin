@@ -1,0 +1,92 @@
+<style>
+    fieldset.fbb, fieldset.tb {
+        border: 1px solid grey; background-color: #EEE
+    }
+    fieldset.tb label {
+        display: inline-block;
+        font-weight: normal;
+        width: 15%;
+    }
+    fieldset.fbb label {
+        display: inline-block;
+        font-weight: normal;
+        width: 20%;
+    }
+    fieldset.fbb label input, fieldset.tb label input{
+        margin-right: 0.5em;
+    }
+
+    .overlay {
+        display: block;
+        position: absolute;
+        padding: 8em;
+        margin: 0px;
+        width: 60em;
+        left: 0px; top: 0px;
+    }
+
+    .overlay figure {
+        margin: 8em;
+        padding: 0px;
+        -webkit-box-shadow:  10px 10px 20px 5px rgba(0, 0, 0, 0.33);
+        box-shadow:  10px 10px 20px 5px rgba(0, 0, 0, 0.33);
+        border: 2px solid black;
+
+    }
+</style>
+
+<script language="javascript">
+
+    var static_data = <%-JSON.stringify(statics, false, 4) %>;
+</script>
+
+<div ng-app >
+    <div ng-controller="StaticsCtrl" >
+    <div ng:show="show_files" class="overlay">
+    <figure class="route_files clearfix"ng:model="active_route">
+        <h2>Files in &quot;{{ active_route.prefix }}&quot;</h2>
+        <ul>
+            <li ng-repeat="file in active_route.files">
+                {{active_route.prefix}}/{{file}} <button ng:click="set_current_file(file, route)">{{file }}</button>
+            </li>
+        </ul>
+        <iframe style="height: 20em" width=90% scrolling="yes" id="file_preview" src="{{file_preview_url}}"></iframe>
+       <br /> <button ng:click="show_files=false">Close</button>
+    </figure>
+    </div>
+    <table class="datagrid" width="100%"class="ng_tabs">
+        <thead>
+        <tr>
+            <td class="controls" colspan="6"><h1>Static Routes</h1></td>
+        </tr>
+        <tr>
+            <th>Prefix</th>
+            <th>Root</th>
+            <th>&nbsp;</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr ng:repeat="route in statics | orderBy:'prefix'">
+            <td>{{route.prefix}}</td>
+            <td>{{route.root }}</td>
+            <td class="control">
+                <button class="edit" ng:click="view_files(route)" ><span class="icon"></span> Files</button>
+            </td>
+        </tr>
+        </tbody>
+
+        <tfoot>
+        <tr>
+            <th>Prefix</th>
+            <th>Root</th>
+        </tr>
+        <tr>
+            <td class="controls" colspan="6">&nbsp;</td>
+        </tr>
+        </tfoot>
+    </table>
+    </div>
+
+</div>
+

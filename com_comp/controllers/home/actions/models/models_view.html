@@ -1,0 +1,49 @@
+<table class="datagrid" width="100%">
+    <thead>
+    <tr>
+        <td class="controls" colspan="6"><h1>Models</h1></td>
+    </tr>
+    <tr>
+        <th>Name</th>
+        <th>Count</th>
+        <th>Deleted</th>
+        <th>&nbsp;</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% models.forEach(function(model_info){ %>
+    <tr>
+        <td>
+            <%= model_info.model.name %>
+        </td>
+        <td>
+            <%= model_info.active %>
+        </td>
+        <td>
+            <%= model_info.count - model_info.active %>
+        </td>
+        <td class="control">
+            <button class="edit"
+                    onclick="document.location='/admin/comp/model/<%= model_info.model.name %>'; return false"><span
+                    class="icon"></span> Edit
+            </button>
+        </td>
+    </tr>
+
+    <% }) %>
+
+    </tbody>
+
+    <tfoot>
+    <tr>
+        <th>Name</th>
+        <th>Count</th>
+        <th>Deleted</th>
+        <th>&nbsp;</th>
+    </tr>
+    <tr>
+        <td class="controls" colspan="6">&nbsp;</td>
+    </tr>
+    </tfoot>
+</table>
