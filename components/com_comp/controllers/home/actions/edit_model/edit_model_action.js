@@ -19,8 +19,8 @@ module.exports = {
             return;
         }
 
-        if (!rs.req_props.has_content('id')) {
-            this.on_put_validation_error(rs, 'no ID');
+        if (!rs.has_content('id')) {
+            this.on_put_validate_error(rs, 'no ID');
         } else {
             this.on_put_input(rs);
         }

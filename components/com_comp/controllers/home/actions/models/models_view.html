@@ -4,6 +4,7 @@
         <td class="controls" colspan="6"><h1>Models</h1></td>
     </tr>
     <tr>
+        <th>Path</th>
         <th>Name</th>
         <th>Count</th>
         <th>Deleted</th>
@@ -14,6 +15,9 @@
     <tbody>
     <% models.forEach(function(model_info){ %>
     <tr>
+        <td>
+            <%- model_info.model._resource_path.substr(frame_path.length) %>
+        </td>
         <td>
             <%= model_info.model.name %>
         </td>
@@ -37,6 +41,7 @@
 
     <tfoot>
     <tr>
+        <th>Path</th>
         <th>Name</th>
         <th>Count</th>
         <th>Deleted</th>
