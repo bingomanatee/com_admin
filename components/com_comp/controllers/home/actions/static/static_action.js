@@ -5,6 +5,7 @@ var path = require('path');
 var NE = require('nuby-express');
 var Gate = NE.deps.support.Gate;
 var proper_path = NE.deps.support.proper_path;
+var validate_admin = require('validate_admin');
 
 /* ***************** CLOSURE ************* */
 
@@ -15,12 +16,10 @@ module.exports = {
     /* *************** GET RESPONSE METHODS ************** */
 
     on_validate:function (rs) {
-        var self = this;
-        if (this.can && _.isFunction(this.can)){
-            if (!this.can(rs, 'admin')) {
-                return this.on_get_validate_error(rs, 'you are not authorized to administer this site');
-            }
+        if (!validate_admin(rs, 'post', this)) {
+            return;
         }
+
         this.on_input(rs);
     },
 

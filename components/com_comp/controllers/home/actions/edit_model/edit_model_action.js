@@ -3,6 +3,7 @@ var util = require('util');
 var fs = require('fs');
 var path = require('path');
 var NE = require('nuby-express');
+var validate_admin = require('validate_admin');
 
 /* ***************** CLOSURE ************* */
 
@@ -14,15 +15,16 @@ module.exports = {
 
     on_get_validate:function (rs) {
         var self = this;
-        if (this.can(rs, 'admin')) {
-            if (rs.has_content('name')) {
-                this.on_get_input(rs);
-            } else {
-                this.on_get_validate_error(rs, 'no model name passed');
-            }
-        } else {
-            this.on_get_validate_error(rs, 'must be admin');
+        if (!validate_admin(rs, 'get', this)) {
+            return;
         }
+
+        if (!rs.req_props.has_content('id')) {
+            this.on_put_validation_error(rs, 'no ID');
+        } else {
+            this.on_put_input(rs);
+        }
+
     },
 
     on_get_input:function (rs) {
@@ -47,17 +49,17 @@ module.exports = {
     /* *************** POST RESPONSE METHODS ************** */
 
     on_post_validate:function (rs) {
-        console.log('post validation: ', rs.req_props);
-        var self = this;
-        if (this.can(rs, 'admin')) {
-            if (rs.has_content('name', 'task')) {
-                this.on_post_input(rs);
-            } else {
-                this.on_post_validate_error(rs, 'no model name passed');
-            }
-        } else {
-            this.on_post_validate_error(rs, 'must be admin');
+
+        if (!validate_admin(rs, 'post', this)) {
+            return;
         }
+
+        if (rs.has_content('name', 'task')) {
+            this.on_post_input(rs);
+        } else {
+            this.on_post_validate_error(rs, 'no model name passed');
+        }
+
     },
 
     on_post_input:function (rs) {
@@ -90,10 +92,10 @@ module.exports = {
         var crit = rs.req_props.crit;
         try {
             var jcrit = JSON.parse(crit);
-            model.find(jcrit, function(err, out){
+            model.find(jcrit, function (err, out) {
                 rs.send(out);
             });
-        } catch (err){
+        } catch (err) {
             this.on_post_process_error(rs, err);
         }
     },

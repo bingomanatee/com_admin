@@ -27,10 +27,10 @@
             <tr>
 
                 <th style="border: none"><%= con.name %></th>
-                <th style="text-align: left">
+                <th style="text-align: left; border: none">
                     <b><%= act.name %></b>
-                </h>
-                <td colspan="4">&nbsp;</td>
+                </th>
+                <th colspan="4" style="border: none">&nbsp;</th>
             </tr>
             <% act.get_routes(true ).forEach(function(route){ %>
             <tr>

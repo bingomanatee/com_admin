@@ -3,5 +3,9 @@
 
     "tasks": [
         "create action"
+    ],
+
+    "javascript": [
+        "/js/util/utils.js"
     ]
 }

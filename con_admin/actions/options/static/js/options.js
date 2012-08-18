@@ -2,25 +2,7 @@ $(function () {
 
     var REST_ROOT = '/admin/comp/option';
 
-    /* ***************** HELPERS ******************** */
-
-    function _deserialize(fd) {
-        var out = {};
-
-        _.each(fd, function (field) {
-            if (out[field.name]) {
-                if (!_.isArray(out[field.name])) {
-                    out[field.name] = [out[field.name]];
-                }
-                out[field.name].push(field.value);
-            } else {
-                out[field.name] = field.value;
-            }
-
-        });
-
-        return out;
-    }
+    /* ***************** HELPERS ********************
 
     Handlebars.registerHelper('id_short', function (id) {
         return id.slice(0, 8) + '...'
@@ -42,22 +24,22 @@ $(function () {
         }
         return new Handlebars.SafeString(text_input({name:name, value:value}));
     })
+     Handlebars.registerHelper('id_display', function (id) {
+     var ida = [
+     id.slice(0, 4),
+     id.slice(4, 8),
+     id.slice(8, 12),
+     id.slice(12, 16),
+     id.slice(16, 20),
+     id.slice(20)
+     ]
+     return  ida.join('-');
+     });*/
 
     Handlebars.registerHelper('sq', function (t) {
         return t.replace(/'/g, '\\\'');
     });
 
-    Handlebars.registerHelper('id_display', function (id) {
-        var ida = [
-            id.slice(0, 4),
-            id.slice(4, 8),
-            id.slice(8, 12),
-            id.slice(12, 16),
-            id.slice(16, 20),
-            id.slice(20)
-        ]
-        return  ida.join('-');
-    });
 
     var data_type_options =
         [
@@ -259,6 +241,7 @@ $(function () {
 
         events:{
             'click button.edit':'edit_config',
+            'click button.delete': 'delete_config',
             'mouseover td.id_value':'show_id',
             'mouseout td.id_value':'hide_id'
         },
@@ -272,9 +255,14 @@ $(function () {
         },
 
         edit_config:function (n) {
-          //  console.log('edit menu: ', n, this, this.model);
+            //  console.log('edit menu: ', n, this, this.model);
             var mfv = new EditConfigView({model:this.model});
             mfv.render();
+        },
+
+        delete_config:function (n) {
+            this.model.destroy();
+            configs_view.render();
         }
 
     })

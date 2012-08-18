@@ -2,4 +2,5 @@
 
 requires ne-layout.js
 
-This module blends the semantic layout system, HTML5boilerlplate, and angular.js.
+The admin module provides layouts, introspection, and action instantiation
+for the nuby express system.

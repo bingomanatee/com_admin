@@ -3,6 +3,7 @@ var util = require('util');
 var fs = require('fs');
 var path = require('path');
 var NE = require('nuby-express');
+var validate_admin = require('validate_admin');
 
 /* ***************** CLOSURE ************* */
 
@@ -13,15 +14,10 @@ module.exports = {
     /* *************** RESPONSE METHODS ************** */
 
     validate:function (rs) {
-
-        // note - "can" is a feature of the member module.
-        // While the member module is not attached to the admin module
-        // it is fairly safe to assume you won't be using the admin module without ACL and membership.
-        if (this.can && _.isFunction(this.can)){
-            if (!this.can(rs, [ 'admin'])) {
-               return this.on_validate_error(rs, 'you are not authorized to administer this site');
-            }
+        if (!validate_admin(rs, '', this)) {
+            return;
         }
+
         this.on_input(rs);
     },
 

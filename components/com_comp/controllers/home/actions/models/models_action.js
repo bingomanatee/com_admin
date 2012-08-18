@@ -4,6 +4,7 @@ var fs = require('fs');
 var path = require('path');
 var NE = require('nuby-express');
 var Gate = NE.deps.support.Gate;
+var validate_admin = require('validate_admin');
 
 // @NOTE: since the data is embedded in the action,
 
@@ -16,12 +17,11 @@ module.exports = {
     /* *************** GET RESPONSE METHODS ************** */
 
     on_get_validate:function (rs) {
-        var self = this;
-        if (this.can(rs, 'admin')) {
-            this.on_get_input(rs);
-        } else {
-            this.on_get_validate_error(rs, 'You must be an admin to work with models');
+        if (!validate_admin(rs, 'post', this)) {
+            return;
         }
+
+        this.on_get_input(rs);
     },
 
     on_get_input:function (rs) {

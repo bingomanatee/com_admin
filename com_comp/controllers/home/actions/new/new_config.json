@@ -1,7 +1,0 @@
-{
-    "method": "*",
-
-    "get_route": "*/new",
-
-    "post_route": "*/new"
-}

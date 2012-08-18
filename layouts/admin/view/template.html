@@ -45,59 +45,76 @@
 </article>
 <%- partial("js.html", javascript) %>
 <script language="javascript">
-    $(
-            function () {
-                NE_ADMIN.panel('admin', '#sidebar_menu');
-                var status = null;
-            //    console.log('listening to FB');
-                $('body').bind('fb', function () {
-                    FB.Event.subscribe('auth.authResponseChange', function(response) {
-                   //     console.log('The status of the session is: ', response.status, '; old status == ', status);
-                        if (status === null){
-                            status = response.status;
-                        } else if (response.status != status){
-                         //   console.log('status change: ', response.status);
-                            status = response.status;
-                            //location.reload();
-                        }
-                    });
+    $(function () {
 
-                    FB.getLoginStatus(function (res) {
+        var facebook_loaded = false;
+        var member_loaded = false;
+        var current_member = null;
+        var ticket_loaded = false;
+        var fb_member_template = Handlebars.compile('<img src="{{picture_url}}" /><br />Welcome {{name }}');
 
-                        if (res.status == 'connected') {
-                            //   console.log('connected_as:', res);
-                            get_local_data(res);
+        console.log('binding body');
+        $('body').bind('member', function (event, member) {
+            console.log('reflecting member', member);
+            var privs = NE_ADMIN.privs = member && member.privs ? member.privs : [];
+            member_loaded = (member) ? true : false;
+            current_member = member;
 
-                            FB.api('/me', function (response) {
-                                FB.api('/me/picture', function (pic) {
+            _update_state();
+        });
 
-                                    // console.log('me: ', response, 'pic', pic);
-                                    response.url = pic;
-                                    var ut = Handlebars.compile('<img src="{{url}}" /><br />Welcome {{name }}');
-                                    $('#fb-user').html(ut(response));
-
-                                })
-
-                            });
-
-                        } else {
-                            get_local_data(false);
-                            $('body').trigger('local_user', false);
-                        }
-                    })
-
-                })
-
-                $('body').bind('local_user', function(event, user){
-                    privs = user && user.privs ? user.privs: [];
-
-                    if (!_.include(privs, 'admin')){
-                        alert('You\'re not an admin, fuck off!');
-                        document.location = '/';
-                    }
-                });
+        function _ticket_from_cookie(){
+            var ticket_id = 'fb_ticket_' + current_member.member_name;
+            console.log('ticket id: ', ticket_id);
+            var fb_ticket = $.cookie(ticket_id, {path:'/'});
+            if (fb_ticket) {
+                $('#fb-user').html(fb_ticket);
+                ticket_loaded = ticket_id;
+                return true;
             }
-    )
+        }
+
+        function _update_state() {
+            console.log('facebook_loaded: ', facebook_loaded, ', member_loaded: ', member_loaded);
+            NE_ADMIN.panel('admin', '#sidebar_menu');
+            if (facebook_loaded && member_loaded) {
+                var ticket_id = 'fb_ticket_' + current_member.member_name;
+                console.log('ticket id: ', ticket_id);
+                if (ticket_loaded == ticket_id){
+                    console.log('already loaded ticket ' + ticket_id);
+                    return;
+                }
+                var fb_ticket = $.cookie(ticket_id, {path:'/'});
+                if (!_ticket_from_cookie()) {
+                    FB.api('/me', function (response) {
+                        FB.api('/me/picture', function (pic) {
+                            // console.log('me: ', response, 'pic', pic);
+                            response.picture_url = pic;
+                            var fb_ticket = fb_member_template(response);
+                            $.cookie(ticket_id, fb_ticket, {path:'/'});
+                            $('#fb-user').html(fb_ticket);
+                            ticket_loaded = ticket_id;
+                        })
+
+                    });
+                }
+            } else if (member_loaded) {
+                _ticket_from_cookie();
+            } else {
+                $('#fb-user').empty();
+                ticket_loaded = false;
+            }
+
+        }
+
+        $('body').bind('fb', function () {
+            facebook_loaded = true;
+            _update_state();
+        })
+
+    })
+    ;
+
 </script>
 
 

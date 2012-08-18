@@ -1,0 +1,17 @@
+{
+    "method":"*",
+
+    "get_route":"*/new",
+
+    "post_route":"*/new",
+
+    "options":[
+        {
+            "name":"unix_user_name",
+            "type":"string",
+            "default":"",
+            "description":"Changes ownership of any newly created files to this user."
+        }
+    ]
+
+}

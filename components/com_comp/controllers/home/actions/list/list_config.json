@@ -1,6 +1,6 @@
 {
     "method":"get",
 
-    "route":"*/list"
+    "route":"*s"
 
 }

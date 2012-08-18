@@ -1,5 +1,9 @@
 {
     "tasks": [
     "admin"
+    ],
+
+    "javascript": [
+        "/js/util/utils.js"
     ]
 }

@@ -109,6 +109,9 @@ module.exports = {
 
                 } else {
                     if (_DEBUG) console.log('putting options ', config_file_option);
+                    if (config_file_option){
+                        config_file_option.value = config_file_option.default;
+                    }
                     gate.task_start();
                     options_model.put(config_file_option,
                         function (err, result) {

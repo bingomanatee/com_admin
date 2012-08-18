@@ -4,7 +4,8 @@ var fs = require('fs');
 var path = require('path');
 var NE = require('nuby-express');
 var proper_path = NE.deps.support.proper_path;
-var ejs = require('./../../../../node_modules/ejs');
+var ejs = require('ejs');
+var validate_admin = require('validate_admin');
 
 /* ***************** CLOSURE ************* */
 
@@ -22,17 +23,12 @@ module.exports = {
     on_get_validate:function (rs) {
         var self = this;
 
-        // note - "can" is a feature of the member module.
-        // While the member module is not attached to the admin module
-        // it is fairly safe to assume you won't be using the admin module without ACL and membership.
-        if (this.can && _.isFunction(this.can)){
-            if (!this.can(rs, [ 'admin'])) {
-               return this.on_validate_error(rs, 'you are not authorized to administer this site');
-            }
+        if (!validate_admin(rs, 'post', this)) {
+            return;
         }
 
         if ((!rs.req_props.controller) || (/\.\./.test(rs.req_props.controller))) {
-           return  this.on_get_validate_error(rs, 'no/bad controller path ')
+            return  this.on_get_validate_error(rs, 'no/bad controller path ')
         }
         this.on_get_input(rs);
     },
@@ -43,7 +39,7 @@ module.exports = {
         var cpath = rs.req_props.controller;
         var cpath2 = this.framework.path + cpath;
         var matches = _.filter(controllers, function (c) {
-          //  console.log('checking controller %s', c.path);
+            //  console.log('checking controller %s', c.path);
             if (c.path == cpath) {
                 return true;
             } else if (c.path == cpath2) {
@@ -95,7 +91,7 @@ module.exports = {
         var cpath = rs.req_props.new_action.controller;
         var cpath2 = this.framework.path + cpath;
         var matches = _.filter(controllers, function (c) {
-          //  console.log('checking controller %s', c.path);
+            //  console.log('checking controller %s', c.path);
             if (c.path == cpath) {
                 return true;
             } else if (c.path == cpath2) {
@@ -185,24 +181,24 @@ module.exports = {
                     if (err) {
                         self.on_post_process_error(rs, err);
                     } else {
-                     //   rs.send({msg:'action_created', data:new_action})
+                        //   rs.send({msg:'action_created', data:new_action})
                         rs.flash('info', 'Your new action has been written. Note you may have to change ownership or read/write flacs on it. Restart your site to use new action');
                         rs.go('/admin/comp/list');
 
                         setTimeout(function () {
                             var spawn = require('child_process').spawn,
-                            ls = spawn('chown', ['-R', 'dedelhart', action_dir]);
+                                ls = spawn('chown', ['-R', 'dedelhart', action_dir]);
 
                             ls.stdout.on('data', function (data) {
-                          //      console.log('stdout: ' + data);
+                                //      console.log('stdout: ' + data);
                             });
 
                             ls.stderr.on('data', function (data) {
-                            //    console.log('stderr: ' + data);
+                                //    console.log('stderr: ' + data);
                             });
 
                             ls.on('exit', function (code) {
-                           //     console.log('child process exited with code ' + code);
+                                //     console.log('child process exited with code ' + code);
                             });
                         }, 3000); // plenty of time for writes to finish
                     }
