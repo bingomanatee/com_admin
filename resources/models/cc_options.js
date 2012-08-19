@@ -29,7 +29,39 @@ schema.statics.inactive = function (cb) {
 }
 
 var _model = mm.create(schema,
-    {name:"cc_options", type:"model"}
+    {
+        name:"cc_options",
+        type:"model",
+        option_value:function (name, cb) {
+            var self = this;
+            if (_.isArray(name)) {
+                this.find({name:{"$in":name}}, function (err, opts) {
+                    if (err) {
+                        cb(err);
+                    } else {
+                        var opt_values = {};
+                        name.forEach(function (n) {
+                            opt_values[n] = null;
+                        });
+                        opts.forEach(function (o) {
+                            opt_values[o.name] = o.value
+                        });
+                        cb(null, opt_values);
+                    }
+                });
+            } else {
+                this.get({name:name}, function (err, opt) {
+                    if (err) {
+                        cb(err);
+                    } else if (opt) {
+                        cb(null, opt.value);
+                    } else {
+                        cb(new Error('cannot find option ' + name));
+                    }
+                })
+            }
+        }
+    }
 );
 
 module.exports = function () {

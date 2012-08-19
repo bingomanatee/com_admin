@@ -1,10 +1,16 @@
+<style>
+  #maincolumn  table.datagrid tr.subhead th {
+        text-align: left; border-right: none; border-bottom: 1px solid black;
+      font-weight: normal;
+    }
+
+</style>
 <table class="datagrid" width="100%">
     <thead>
     <tr>
         <td class="controls" colspan="6"><h1>Models</h1></td>
     </tr>
     <tr>
-        <th>Path</th>
         <th>Name</th>
         <th>Count</th>
         <th>Deleted</th>
@@ -13,12 +19,23 @@
     </thead>
 
     <tbody>
-    <% models.forEach(function(model_info){ %>
+    <%
+    var last_place = '';
+    _.sortBy(models, function(m){ return m._resource_path; }).forEach(function(model_info){
+    var place = model_info.model._resource_path.substring(frame_path.length,
+    model_info.model._resource_path.indexOf('/model') + 7);
+    if (place != last_place){
+    last_place = place;
+    %>
+    <tr class="subhead">
+        <th><%= place %></th>
+        <th>Count</th>
+        <th>Deleted</th>
+        <th>&nbsp;</th>
+    </tr>
+    <% } %>
     <tr>
-        <td>
-            <%- model_info.model._resource_path.substr(frame_path.length) %>
-        </td>
-        <td>
+        <td width="66%" style="padding-left: 2em">
             <%= model_info.model.name %>
         </td>
         <td>
@@ -41,7 +58,6 @@
 
     <tfoot>
     <tr>
-        <th>Path</th>
         <th>Name</th>
         <th>Count</th>
         <th>Deleted</th>

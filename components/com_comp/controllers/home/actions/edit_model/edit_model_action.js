@@ -19,10 +19,10 @@ module.exports = {
             return;
         }
 
-        if (!rs.has_content('id')) {
-            this.on_put_validate_error(rs, 'no ID');
+        if (!rs.has_content('name')) {
+            this.on_get_validate_error(rs, 'no model name');
         } else {
-            this.on_put_input(rs);
+            this.on_get_input(rs);
         }
 
     },
@@ -39,6 +39,7 @@ module.exports = {
 
     on_get_process:function (rs, model) {
         var self = this;
+        console.log('processing model %s', util.inspect(model));
         this.on_output(rs, {model:model});
     },
 
@@ -57,7 +58,7 @@ module.exports = {
         if (rs.has_content('name', 'task')) {
             this.on_post_input(rs);
         } else {
-            this.on_post_validate_error(rs, 'no model name passed');
+            this.on_post_validate_error(rs, 'no model name, task passed');
         }
 
     },
@@ -91,8 +92,17 @@ module.exports = {
         var self = this;
         var crit = rs.req_props.crit;
         try {
-            var jcrit = JSON.parse(crit);
-            model.find(jcrit, function (err, out) {
+            var jcrit = jcrit ? JSON.parse(crit) : '';
+            var q = model.find(jcrit);
+            if (rs.req_props.limit) {
+                q.limit(parseInt(rs.req_props.limit));
+            }
+            if (rs.req_props.sort){
+                rs.req_props.sort.split(',').forEach(function(f){
+                    q.asc(f);
+                })
+            }
+            q.exec(function (err, out) {
                 rs.send(out);
             });
         } catch (err) {

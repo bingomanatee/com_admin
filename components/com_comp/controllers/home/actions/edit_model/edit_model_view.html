@@ -24,7 +24,7 @@
             <th><label>Limit</label></th>
             <td><select name="limit">
                 <option value=1>1</option>
-                <option value=10>10</option>
+                <option value=10 selected="selected">10</option>
                 <option value=100>100</option>
                 <option value=1000>1000</option>
                 <option value=0>NO LIMIT</option>
@@ -63,7 +63,7 @@
         })
         console.log(data_obj);
         $.post( action, data_obj).success(function(data){
-            $('#query_result').val(JSON.stringify(data));
+            $('#query_result').val(JSON.stringify(data, true, 3));
         })
         return false;
     });

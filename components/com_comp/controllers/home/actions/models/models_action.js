@@ -30,7 +30,7 @@ module.exports = {
         var model_data = [];
 
         var gate = new Gate(function () {
-            self.on_process(rs, {models:model_data, frame_path: self.framework.path});
+            self.on_process(rs, {models:model_data, frame_path: self.framework.path, _: _});
         }, 'counting models');
 
         models.forEach(function (model, i) {
