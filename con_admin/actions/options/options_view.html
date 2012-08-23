@@ -7,9 +7,9 @@
             </td>
         </tr>
         <tr>
-            <th class="id_sort">ID</th>
             <th class="src_sort">Source</th>
             <th class="name_sort">Name</th>
+            <th class="name_sort">Description</th>
             <th class="type_sort">Type</th>
             <th colspan="2">&nbsp;</th>
         </tr>
@@ -18,9 +18,9 @@
         </tbody>
         <tfoot>
         <tr>
-            <th class="id_sort">ID</th>
             <th class="src_sort">Source</th>
             <th class="name_sort">Name</th>
+            <th class="name_sort">Description</th>
             <th class="type_sort">Type</th>
             <th colspan="2">&nbsp;</th>
         </tr>
@@ -35,11 +35,12 @@
         in which it occurs. If you don't, the option will be re-cretated on restart. </p>
 
 <script id="config_list_template" type="text/x-handlebars-template">
-   <tr> <th class="id_value mid" id_value="{{ _id }}">
+   <tr><% if (false) { %> <th class="id_value mid" id_value="{{ _id }}">
         <a href="#" title="{{id_display _id }}">{{id_short _id }} </a>
-    </th>
+    </th> <% } %>
     <th style="text-align: left;">{{ class }} {{ src }} </th>
-    <td width="50%">{{ name }}</td>
+    <td style="text-align: right; white-space: nowrap"><b>{{ name }}</b></td>
+       <td> {{ value }} </td>
     <td>{{ data_type }}</td>
     <td class="control">
         <button class="edit"><span class="icon"></span> Edit</button>
@@ -48,8 +49,8 @@
            <button class="delete"><span class="icon"></span> Delete</button>
        </td></tr>
     <tr>
-        <td colspan="2" style="text-align: right"></td>
-    <td title="default: {{ default }}" colspan="4">{{ value }}</td>
+        <th></th>
+    <td title="default: {{ default }}" colspan="5"><small>{{ description }}</small></td>
     </tr>
 </script>
 

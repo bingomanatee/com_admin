@@ -47,7 +47,7 @@
     text-align: left;
 }
 
-form.dialog_form {
+.dialog_form {
     padding: 1em;
     text-align: left;
     td {
@@ -62,14 +62,20 @@ form.dialog_form {
         text-align: right;
         padding: @df_padding;
         padding-right: 1em;
+
+    }
+    label.plain {
+        width: auto;
+        color: black;
+        text-align: left;
     }
 }
 
-form.dialog_form, table.datagrid, table.datagrid_nh {
-    input[type="text"], textarea, select {
+.dialog_form, table.datagrid, table.datagrid_nh {
+    input[type="text"],   input[type="password"], textarea, select {
         color: black;
         -webkit-appearance: none;
-        border: none;
+        border: 1px solid lighten(@df_input_border, 20%);
         border-bottom: 1px solid @df_input_border;
         width: @df_input_width;
         padding: @df_padding;
@@ -78,11 +84,15 @@ form.dialog_form, table.datagrid, table.datagrid_nh {
         .border-radius(0px);
     }
 
+    input[type="password"] {
+        border-bottom: 1px dashed black;
+    }
+
     textarea {
         height: 6em;
     }
 
-    input[type="text"].wide, textarea.wide {
+    input[type="text"].wide,   input[type="text"].wide,  textarea.wide {
         width: @df_input_width * 1.5;
     }
 
@@ -135,7 +145,7 @@ form.dialog_form {
 }
 
 table.datagrid, table.datagrid_nh {
-    input[type="text"], textarea, select {
+    input[type="text"],   input[type="password"],  textarea, select {
         border-top: 1px solid @df_input_border_lt;
         border-left: 1px solid @df_input_border_lt;
         border-right: 1px solid @df_input_border_lt;
@@ -279,50 +289,112 @@ table.datagrid, table.datagrid_nh{
             padding: @dg_padding;
         }
 
-        thead {
-            th {
-                border-bottom: 1px solid (@dg_head_bg + @dg_head_bg_dk)/2 !important;
-                .dg_head
-            }
-            h1, h2 {
-                color: black;
-                padding: 0px !important;
-                margin: -0.25em;
-                text-align: center !important;
-                font-family: 'Karla', sans-serif !important;
+        thead, tbody thead {
 
-            }
-            td {
-                 padding: 0em 1.5em;
-                 font-weight: bold;
-                 color: @dg_txt_head;
-                 background-color: @dg_head_bg;
-                h2 {
-                    font-size: 1.5em;
-                    color: rgb(25, 0, 80);
-                    text-shadow: 1px 1px 1px white;
+
+            td.control {
+                width: 6em;
+                white-space: nowrap;
+                padding: 3px;
+                background-color: desaturate(@dg_row_bg, @dbb_control_desat);
+
+                button {
+                    background-color: transparent;
+                    border: none;
+                    .dg_btn;
+                    color: @dg_button_txt
                 }
-             }
-             td.controls {
-            .vertical-3-gradient(@dg_head_bg_lt, (@dg_head_bg_lt + (3 * @dg_head_bg))/ 4, @dg_head_bg);
-            font-weight: bold;
-            color: @dg_txt_head;
-            .multi-border-radius(8px, 8px, 0px, 0px);
-            padding: 0.5em 1.5em;
 
-            button {
-                background-color: saturate(@dg_ctl_btn, 30%);
-                .dg_btn;
-                margin: 0.5em 1em;
-                .border-radius(3px);
-            }
-            button:hover {
-                background-color: lighten(@dg_ctl_btn, 20%);
+                button:hover {
+                    color: @dg_button_txt_active;
+                    background-color: @dg_button_active;
+                    border: 1px solid darken(@dg_button_active, @dg_button_active_dk);
+                }
+
+                input[type="button"] .icon, button .icon {
+                    background-image: url(/css/custom-theme/images/ui-icons_222222_256x240.png);
+                    .icon
+                }
+
+                input[type="button"].approve .icon, button.approve .icon {
+                    background-position: -64px -144px;
+                }
+
+                input[type="button"].view .icon, button.view .icon {
+                    background-position: -160px -112px;
+                }
+
+                input[type="button"].new .icon, button.new .icon {
+                    background-position: -32px -128px;
+                }
+
+                input[type="button"].edit .icon, button.edit .icon {
+                    background-position: -176px -112px;
+                }
+
+                input[type="button"].up .icon, button.up .icon {
+                    background-position: 0 -16px;
+                }
+
+                input[type="button"].down .icon, button.down .icon {
+                    background-position: -64px -16px;
+                }
+
+                input[type="button"].delete, button.delete {
+                    color: rgb(204, 0,0);
+                }
+                input[type="button"].delete .icon, button.delete .icon {
+                    background-position: -96px -128px;
+                }
             }
 
-            input[type="text"] {
-                background-color: @dg_head_field_color;
-                border: 1px solid @dg_head_field_border;
+            tr {
+
+                th {
+                    border-right: none;
+                    border-bottom: 1px solid (@dg_head_bg + @dg_head_bg_dk)/2 !important;
+                    .dg_head
+                }
+                h1, h2 {
+                    color: black;
+                    padding: 0px !important;
+                    margin: -0.25em;
+                    text-align: center !important;
+                    font-family: 'Karla', sans-serif !important;
+
+                }
+                td {
+                    padding: 0em 1.5em;
+                    font-weight: bold;
+                    color: @dg_txt_head;
+                    background-color: @dg_head_bg;
+                    h2 {
+                        font-size: 1.5em;
+                        color: rgb(25, 0, 80);
+                        text-shadow: 1px 1px 1px white;
+                    }
+                }
+                td.controls {
+                    .vertical-3-gradient(@dg_head_bg_lt, (@dg_head_bg_lt + (3 * @dg_head_bg))/ 4, @dg_head_bg);
+                    font-weight: bold;
+                    color: @dg_txt_head;
+                    .multi-border-radius(8px, 8px, 0px, 0px);
+                    padding: 0.5em 1.5em;
+
+                    button {
+                        background-color: saturate(@dg_ctl_btn, 30%);
+                        .dg_btn;
+                        margin: 0.5em 1em;
+                        .border-radius(3px);
+                    }
+                    button:hover {
+                        background-color: lighten(@dg_ctl_btn, 20%);
+                    }
+
+                    input[type="text"] {
+                        background-color: @dg_head_field_color;
+                        border: 1px solid @dg_head_field_border;
+                    }
             }
              }
         }
@@ -377,13 +449,25 @@ table.datagrid, table.datagrid_nh{
                 th {
                     background-color: @dg_head_bg;
                     border-right: 1px solid @dg_head_bg_dk;
-                    font-weight: bold;
+                    font-weight: normal;
                     text-align: right;
                     white-space: nowrap;
                     padding-right: @dg_padding * 2;
                 }
                 th.mid {
                     border-right: none;
+                }
+
+                th.sub {
+
+                    border-right: none;
+                    text-align: left;
+
+                    border-top: 1px solid lighten(@dg_head_bg, 55%) !important;
+                    border-bottom: 1px solid darken(@dg_head_bg, 15%) !important;
+                    background-color: lighten(@dg_head_bg, 15%) !important;
+                    font-weight: bold;
+                    padding-left: 2em;
                 }
 
                  ul.cells {

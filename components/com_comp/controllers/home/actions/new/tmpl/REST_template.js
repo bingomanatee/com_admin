@@ -37,7 +37,7 @@ module.exports = {
 
     on_get_validate:function (rs) {
         var self = this;
-        if (rs.req_props.id){
+        if (rs.req_props.<%= id_field_name %>){
             this.on_get_one_validate(rs);
         } else {
             this.on_get_input(rs);
@@ -72,7 +72,7 @@ module.exports = {
 
     on_get_one_input: function(rs){
         var self = this;
-        this.model().get(rs.req_props.id, function(err, item){
+        this.model().get(rs.req_props.<%= id_field_name %>, function(err, item){
             if(err){
                 self.on_get_error(rs, err);
             } else {
@@ -164,11 +164,11 @@ module.exports = {
 
     on_delete_process:function (rs, input) {
         var self = this;
-        this.model().delete(rs.req_props.id, function(err, deleted){
+        this.model().delete(rs.req_props.<%= id_field_name %>, function(err, deleted){
             if (deleted){
                 rs.send(deleted);
             } else {
-                rs.send({id: rs.req_props.id, deleted: true});
+                rs.send({<%= id_field_name %>: rs.req_props.<%= id_field_name %>, deleted: true});
             }
         })
     },

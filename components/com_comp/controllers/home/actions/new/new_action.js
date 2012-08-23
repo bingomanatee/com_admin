@@ -159,7 +159,7 @@ module.exports = {
                 var action = ejs.render(txt, new_action);
 
                 fs.writeFile(proper_path(action_dir) + proper_path(new_action.name + '_view.html'), '', 'utf8', function (err) {
-                }); // note - becuase this is done between restarts this particular write happens when it happens.
+                }); // note - becuase new action creation is done between restarts we are not waiting for the response here. .
 
                 fs.writeFile(proper_path(action_dir) + proper_path(new_action.name + '_action.js'), action, 'utf8', function (err) {
                     if (err) {
@@ -183,23 +183,27 @@ module.exports = {
                     } else {
                         //   rs.send({msg:'action_created', data:new_action})
                         rs.flash('info', 'Your new action has been written. Note you may have to change ownership or read/write flacs on it. Restart your site to use new action');
-                        rs.go('/admin/comp/list');
+                        rs.go('/admin/comps');
 
                         setTimeout(function () {
-                            var spawn = require('child_process').spawn,
-                                ls = spawn('chown', ['-R', 'dedelhart', action_dir]);
+                            self.models.cc_options.option_value('unix_user_name', function(err, root_user){
+                                if (!root_user) return;
+                                var spawn = require('child_process').spawn;
 
-                            ls.stdout.on('data', function (data) {
-                                //      console.log('stdout: ' + data);
-                            });
+                                var ls = spawn('chown', ['-R', root_user, action_dir]);
 
-                            ls.stderr.on('data', function (data) {
-                                //    console.log('stderr: ' + data);
-                            });
+                                ls.stdout.on('data', function (data) {
+                                    //      console.log('stdout: ' + data);
+                                });
 
-                            ls.on('exit', function (code) {
-                                //     console.log('child process exited with code ' + code);
-                            });
+                                ls.stderr.on('data', function (data) {
+                                    //    console.log('stderr: ' + data);
+                                });
+
+                                ls.on('exit', function (code) {
+                                    //     console.log('child process exited with code ' + code);
+                                });
+                            })
                         }, 3000); // plenty of time for writes to finish
                     }
                 });

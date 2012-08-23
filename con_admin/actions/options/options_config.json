@@ -13,14 +13,6 @@
         },
 
         "/js/admin/comp/options.js"
-    ],
-
-    "static":[
-        {
-            "name":"act_options.js",
-            "path":"js",
-            "prefix":"/js/admin/comp/"
-        }
     ]
 
 }

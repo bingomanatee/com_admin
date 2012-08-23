@@ -21,7 +21,7 @@
     <tbody>
     <%
     var last_place = '';
-    _.sortBy(models, function(m){ return m._resource_path; }).forEach(function(model_info){
+    _.sortBy(models, function(m){ return m.model._resource_path; }).forEach(function(model_info){
     var place = model_info.model._resource_path.substring(frame_path.length,
     model_info.model._resource_path.indexOf('/model') + 7);
     if (place != last_place){

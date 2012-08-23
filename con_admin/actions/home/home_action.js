@@ -28,6 +28,7 @@ module.exports = {
     on_input:function (rs) {
         var self = this;
         this.on_process(rs, rs.req_props);
+        rs.flash('info', 'please complete the <a href="/admin/member/init_wizard">Members Wizard</a>.');
     },
 
     on_process:function (rs, input) {

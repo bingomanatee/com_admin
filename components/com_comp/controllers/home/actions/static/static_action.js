@@ -44,7 +44,7 @@ module.exports = {
             gate.task_start();
             var tp = root + proper_path(static.root);
             fs.readdir(tp, function(err, files){
-                console.log('tp: %s', tp);
+              //  console.log('tp: %s', tp);
                 st_data.push({
                     files: files,
                     prefix: static.prefix,

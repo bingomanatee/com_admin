@@ -42,16 +42,16 @@
 
 <div ng-app >
     <div ng-controller="StaticsCtrl" >
-    <div ng:show="show_files" class="overlay">
-    <figure class="route_files clearfix"ng:model="active_route">
+    <div ng-show="show_files" class="overlay">
+    <figure class="route_files clearfix"  ng-model="active_route">
         <h2>Files in &quot;{{ active_route.prefix }}&quot;</h2>
         <ul>
-            <li ng-repeat="file in active_route.files">
-                {{active_route.prefix}}/{{file}} <button ng:click="set_current_file(file, route)">{{file }}</button>
+            <li  ng-repeat="file in active_route.files">
+                {{active_route.prefix}}/{{file}} <button  ng-click="set_current_file(file, route)">{{file }}</button>
             </li>
         </ul>
         <iframe style="height: 20em" width=90% scrolling="yes" id="file_preview" src="{{file_preview_url}}"></iframe>
-       <br /> <button ng:click="show_files=false">Close</button>
+       <br /> <button ng-click="show_files=false">Close</button>
     </figure>
     </div>
     <table class="datagrid" width="100%"class="ng_tabs">
@@ -67,11 +67,11 @@
         </thead>
 
         <tbody>
-        <tr ng:repeat="route in statics | orderBy:'prefix'">
+        <tr ng-repeat="route in statics | orderBy:'prefix'">
             <td>{{route.prefix}}</td>
             <td>{{route.root }}</td>
             <td class="control">
-                <button class="edit" ng:click="view_files(route)" ><span class="icon"></span> Files</button>
+                <button class="edit" ng-click="view_files(route)" ><span class="icon"></span> Files</button>
             </td>
         </tr>
         </tbody>

@@ -7,30 +7,33 @@
 
     <div style="padding: 0px;">
         <table class="datagrid" style="width: 100%">
-            <thead>
-            <tr>
-                <th>Controller</th>
-                <th>Action</th>
-                <th>&nbsp;</th>
-                <th>&nbsp;</th>
-                <th>&nbsp;</th>
-                <th>&nbsp;</th>
-            </tr>
-            </thead>
 
-            <tbody>
+
             <%
             var view_field = 0;
             component.get_controllers().forEach(function(con, con_index){
             %>
+            <thead>
+            <tr>
+                <th class="mid left" colspan="2">Controller <%= con.name %></th>
+                 <th class="mid" colspan="2">&nbsp;</th>
+                <td class="control">
+                    <button class="new"
+           onclick="document.location='/admin/comp/new?controller=<%= con.path.substr(component.parent.path.length) %>'; return false">
+                        <span class="icon"></span>
+                        New
+                        Action</button>
+                </td>
+            </tr>
+            </thead>
+            <tbody>
             <% con.get_actions().forEach(function(act){ %>
             <tr>
 
-                <th style="border: none"><%= con.name %></th>
-                <th style="text-align: left; border: none">
-                    <b><%= act.name %></b>
+                <th  class="sub">
+                    Action <%= act.name %>
                 </th>
-                <th colspan="4" style="border: none">&nbsp;</th>
+                <th colspan="4"  class="sub">&nbsp;</th>
             </tr>
             <% act.get_routes(true ).forEach(function(route){ %>
             <tr>
@@ -58,15 +61,13 @@
                 <% } %>
 
                 <td class="control">
-                    <button onclick="document.location='/admin/menus?new_menu_link=<%= route.route %>'; return false"
-                            >Menu</button>
-                </td>
-                <td class="control">
-                    <button class="new" onclick="document.location='/admin/comp/new?controller=<%= con.path.substr(component.parent.path.length) %>'; return false">
+                    <% if (route.method == 'get' && (!/:/.test(route.route))){ %>
+                    <button class="new" onclick="document.location='/admin/menus?new_menu_link=<%= route.route %>'; return false"
+                            >
                         <span class="icon"></span>
-                        New
-                        Action</button>
+                       Make Menu</button> <% } %>
                 </td>
+
             </tr>
 
             <% }) %>

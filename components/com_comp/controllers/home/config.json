@@ -1,3 +1,12 @@
 {
-    "route_prefix": "/admin/comp"
+    "route_prefix": "/admin/comp",
+
+    "options":[
+        {
+            "name":"unix_user_name",
+            "type":"string",
+            "default":"",
+            "description":"Changes ownership of any newly created files to this user."
+        }
+    ]
 }

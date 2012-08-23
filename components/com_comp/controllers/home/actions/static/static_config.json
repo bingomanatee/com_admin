@@ -1,15 +1,6 @@
 {
 
-
     "method":"get",
-
-
-    "static":[
-        {
-            "path":"js",
-            "prefix":"/js/admin/static"
-        }
-    ],
 
     "route":"*/static",
 

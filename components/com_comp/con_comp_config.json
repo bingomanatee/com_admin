@@ -6,6 +6,6 @@
     ],
 
     "javascript": [
-        "/js/util/utils.js"
+        "/admin/js/util/utils.js"
     ]
 }

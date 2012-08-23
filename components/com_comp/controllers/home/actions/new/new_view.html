@@ -31,8 +31,13 @@
                 <p/>
                 <% }) %>
                 <p><label><input name="new_action[REST]" type="checkbox" /> REST action</label></p>
+                <p><label>ID field name</label>
+                    <input name="new_action[id_field_name]" type="text" value="_id" />
+                    <!--br />
+                    <input name="new_action[suffix_actions]" type="checkbox"
+                    checked="checked" />Add ID field as suffix to all actions (except put)</label-->
+                </p>
                 <p><label>REST model name:</label> <input type="text" name="new_action[model]" /></p>
-
 
             </fieldset>
             <p class="controls"><button type="submit">Create</button></p>
