@@ -45,8 +45,12 @@ module.exports = {
 
             model.count(function (err, c) {
                 model_info.count = c;
-                model.count({deleted:{'$ne':true}},
+                model.count({'$nor':[{deleted: true}]},
                     function (err, a) {
+                        if (err){
+                            console.log(util.inspect(err));
+                            throw err;
+                        }
                         model_info.active = a;
                         model_data.push(model_info);
                         gate.task_done();

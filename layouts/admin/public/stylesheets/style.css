@@ -33,6 +33,7 @@
  .admin .ui-widget h1,
  .admin .ui-widget h2,
  .admin .ui-widget h3 {
+     font-family: Geneva, Helvetica, sans-serif;
      color: black;
  }
 

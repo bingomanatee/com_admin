@@ -13,7 +13,8 @@
         <tr>
             <th><label>Criteria</label></th>
             <td>
-                <textarea name="crit" style="height: 4em; width: 90%">{"deleted": {"$ne": true }}</textarea>
+                <textarea name="crit" style="height: 4em; width: 90%">{"$nor": [{"deleted": true}]}</textarea>
+                <small>Please use proper JSON notation above - or leave blank.</small>
             </td>
         </tr>
         <tr>

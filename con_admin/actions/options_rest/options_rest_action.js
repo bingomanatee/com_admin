@@ -26,7 +26,7 @@ module.exports = {
         if (rs.has_content('id')) {
             this.on_delete_input(rs);
         } else {
-            this.on_delete_validate_error(rs, 'cannot get id');
+            this.emit('validate_error',rs, 'cannot get id');
         }
 
     },
@@ -36,11 +36,11 @@ module.exports = {
 
         this.model().get(rs.req_props.id, function (err, menu) {
             if (err) {
-                self.on_delete_input_error(rs, err);
+                self.emit('input_error',rs, err);
             } else if (menu) {
                 self.on_delete_process(rs, menu);
             } else {
-                self.on_delete_input_error(rs, 'cannot get menu for id ' + rs.req_props.id);
+                self.emit('input_error',rs, 'cannot get menu for id ' + rs.req_props.id);
             }
         })
     },
@@ -49,7 +49,7 @@ module.exports = {
         var self = this;
         this.model().delete(menu, function (err, del_menu) {
             if (err) {
-                self.on_delete_process_error(rs, err);
+                self.emit('process_error',rs, err);
             } else {
                 rs.send(del_menu);
             }
@@ -76,7 +76,7 @@ module.exports = {
         var self = this;
         this.model().active(function (err, configs) {
             if (err) {
-                self.on_get_input_error(rs, err);
+                self.emit('input_error',rs, err);
             } else {
                 rs.send(configs);
             }
@@ -96,7 +96,7 @@ module.exports = {
         }
 
         if (!rs.req_props.id) {
-            this.on_put_validation_error(rs, 'no ID');
+            this.emit('validation_error',rs, 'no ID');
         } else {
             this.on_put_input(rs);
         }
@@ -107,9 +107,9 @@ module.exports = {
 
         this.model().get(rs.req_props.id, function (err, menu) {
             if (err) {
-                self.on_put_input_error(rs, err);
+                self.emit('input_error',rs, err);
             } else if (!menu) {
-                self.on_put_input_error(rs, 'No Menu');
+                self.emit('input_error',rs, 'No Menu');
             } else {
                 self.on_put_process(rs, menu);
             }
@@ -130,7 +130,7 @@ module.exports = {
 
         menu.save(function (err, new_menu) {
             if (err) {
-                self.on_put_process_error(rs, err);
+                self.emit('process_error',rs, err);
             } else {
                 rs.send(new_menu.toJSON());
             }
@@ -145,7 +145,7 @@ module.exports = {
         }
 
         if (!rs.has_content('id')) {
-            this.on_put_validation_error(rs, 'no ID');
+            this.emit('validation_error',rs, 'no ID');
         } else {
             this.on_put_input(rs);
         }
@@ -159,7 +159,7 @@ module.exports = {
         var self = this;
         this.model().put(input, function (err, new_config) {
             if (err) {
-                self.on_post_process_error(rs, err);
+                self.emit('process_error',rs, err);
             } else {
                 rs.send(new_config.toJSON());
             }

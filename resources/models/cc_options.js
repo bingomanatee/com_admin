@@ -4,6 +4,7 @@ var mongoose = NE.deps.mongoose;
 var util = require('util');
 var _ = require('underscore');
 var Gate = NE.deps.support.Gate;
+var _DEBUG = false;
 
 var constraint = new mongoose.Schema({
     type:String,
@@ -22,11 +23,11 @@ var schema = new mongoose.Schema({
 });
 
 schema.statics.active = function (cb) {
-    return this.find('deleted', {'$ne':true}).run(cb);
+    return this.find({'$nor': [{deleted: true}]}).run(cb);
 }
 
 schema.statics.inactive = function (cb) {
-    return this.find('deleted', true).run(cb);
+    return this.find({'$nor': [{deleted: true}]}).run(cb);
 }
 
 var _model = mm.create(schema,
@@ -47,6 +48,7 @@ var _model = mm.create(schema,
                         opts.forEach(function (o) {
                             opt_values[o.name] = o.value
                         });
+                        if (_DEBUG) console.log('returning opt values: %s', util.inspect(opt_values));
                         cb(null, opt_values);
                     }
                 });
@@ -91,15 +93,21 @@ var _model = mm.create(schema,
                if (_.isEqual(_.sortBy(_.keys(keyed_records), _.identity), keys)){
                    _.each(keyed_records, function(record, key){
                         record.value = opts[key];
+                       if (_DEBUG){
+                           console.log('setting %s option to %s', record.name, record.value);
+                       }
                        record.save(); // @TODO: care about response?
                    });
-                   cb(null, keyed_records);
+                   // well... care a little bit - wait a second
+                   setTimeout(function(){
+                       cb(null, keyed_records);
+                   }, 1000);
                } else {
                    cb(new Error('bad match of keys'));
                }
             })
         }
-    }
+    }, mongoose
 );
 
 module.exports = function () {

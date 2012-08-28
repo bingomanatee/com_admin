@@ -28,7 +28,7 @@ module.exports = {
         }
 
         if ((!rs.req_props.controller) || (/\.\./.test(rs.req_props.controller))) {
-            return  this.on_get_validate_error(rs, 'no/bad controller path ')
+            return  this.emit('validate_error',rs, 'no/bad controller path ')
         }
         this.on_get_input(rs);
     },
@@ -50,7 +50,7 @@ module.exports = {
 
         switch (matches.length) {
             case 0:
-                this.on_get_input_error(rs, 'cannot find controller ' + cpath + ' or ' + cpath2);
+                this.emit('input_error',rs, 'cannot find controller ' + cpath + ' or ' + cpath2);
                 break;
 
             case 1:
@@ -60,7 +60,7 @@ module.exports = {
                 break;
 
             default:
-                this.on_get_input_error(rs, 'more than one match for controller ' + cpath + ' or ' + cpath2);
+                this.emit('input_error',rs, 'more than one match for controller ' + cpath + ' or ' + cpath2);
         }
 
     },
@@ -75,9 +75,9 @@ module.exports = {
     on_post_validate:function (rs) {
         var self = this;
         if (!rs.req_props.new_action) {
-            this.on_post_validate_error(rs, 'no new_action')
+            this.emit('validate_error',rs, 'no new_action')
         } else if (!rs.req_props.new_action.name) {
-            this.on_post_validate_error(rs, 'no name in ' + JSON.stringify(rs.req_props.new_action));
+            this.emit('validate_error',rs, 'no name in ' + JSON.stringify(rs.req_props.new_action));
             //@TODO: check name is leagal for dir.
         } else {
             this.on_post_input(rs);
@@ -103,7 +103,7 @@ module.exports = {
 
         switch (matches.length) {
             case 0:
-                this.on_post_input_error(rs, 'cannot find controller ' + cpath + ' or ' + cpath2);
+                this.emit('input_error',rs, 'cannot find controller ' + cpath + ' or ' + cpath2);
                 break;
 
             case 1:
@@ -111,7 +111,7 @@ module.exports = {
                 break;
 
             default:
-                this.on_post_input_error(rs, 'more than one match for controller ' + cpath + ' or ' + cpath2);
+                this.emit('input_error',rs, 'more than one match for controller ' + cpath + ' or ' + cpath2);
         }
     },
 
@@ -125,11 +125,12 @@ module.exports = {
             var action_dir = actions_dir + proper_path(new_action.name.toLowerCase().replace(/[\W]+/g, '_'));
             path.exists(action_dir, function (ex) {
                 if (ex) {
-                    //@todo: reinsert 4 prod    self.on_post_process_error(rs, 'already have an action ' + action_dir);
+                    //@todo: reinsert 4 prod
+                    self.emit('process_error',rs, 'already have an action ' + action_dir);
                 } //else {
                 fs.mkdir(action_dir, function (err) {
                     if (err) {
-                        //   self.on_post_process_error(rs, err);
+                          self.emit('process_error',rs, err);
                     }// else {
                     _add_action_file(action_dir);
                     //  }
@@ -163,7 +164,7 @@ module.exports = {
 
                 fs.writeFile(proper_path(action_dir) + proper_path(new_action.name + '_action.js'), action, 'utf8', function (err) {
                     if (err) {
-                        self.on_post_process_error(rs, err);
+                        self.emit('process_error',rs, err);
                     } else {
                         _add_config_file(action_dir);
                     }
@@ -179,7 +180,7 @@ module.exports = {
 
                 fs.writeFile(file, config, 'utf8', function (err) {
                     if (err) {
-                        self.on_post_process_error(rs, err);
+                        self.emit('process_error',rs, err);
                     } else {
                         //   rs.send({msg:'action_created', data:new_action})
                         rs.flash('info', 'Your new action has been written. Note you may have to change ownership or read/write flacs on it. Restart your site to use new action');
@@ -216,7 +217,7 @@ module.exports = {
             } else {
                 fs.mkdir(actions_dir, function (err) {
                     if (err) {
-                        //   self.on_post_process_error(rs, err);
+                        //   self.emit('process_error',rs, err);
                     } //else {
                     _make_action();
                     //  }

@@ -24,7 +24,7 @@ function _get_option(name, cb, frame) {
 
     var options_model = frame.get_resource('model', 'cc_options');
 
-    options_model.find_one({name:name, deleted:{"$ne":true}},
+    options_model.find_one({name:name, '$nor':[{deleted: true}]},
         function (err, opt) {
             if (err) {
                 cb(err);

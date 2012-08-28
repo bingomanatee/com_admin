@@ -20,7 +20,7 @@ module.exports = {
         }
 
         if (!rs.has_content('name')) {
-            this.on_get_validate_error(rs, 'no model name');
+            this.emit('validate_error', rs, 'no_model_name')
         } else {
             this.on_get_input(rs);
         }
@@ -33,7 +33,7 @@ module.exports = {
         if (model) {
             this.on_get_process(rs, model);
         } else {
-            this.on_get_input_error(rs, 'cannot get model ' + rs.req_props.name);
+            this.emit('input_error',rs, 'cannot get model ' + rs.req_props.name);
         }
     },
 
@@ -58,7 +58,7 @@ module.exports = {
         if (rs.has_content('name', 'task')) {
             this.on_post_input(rs);
         } else {
-            this.on_post_validate_error(rs, 'no model name, task passed');
+            this.emit('validate_error',rs, 'no model name, task passed');
         }
 
     },
@@ -70,7 +70,7 @@ module.exports = {
             this.on_post_process(rs, model, rs.req_props.task);
         } else {
             console.log('fail! %s', rs.req_props.name);
-            this.on_post_input_error(rs, 'cannot get model ' + rs.req_props.name);
+            this.emit('input_error',rs, 'cannot get model ' + rs.req_props.name);
         }
     },
 
@@ -84,29 +84,32 @@ module.exports = {
 
             default:
                 console.log('task fail %s', task);
-                this.on_post_process_error(rs, 'cannot perform task ' + task);
+                this.emit('process_error',rs, 'cannot perform task ' + task);
         }
     },
 
     _opp_query:function (rs, model) {
         var self = this;
         var crit = rs.req_props.crit;
+        console.log('criteria: %s', util.inspect(crit));
         try {
-            var jcrit = jcrit ? JSON.parse(crit) : '';
+            var jcrit = crit ? JSON.parse(crit) : '';
             var q = model.find(jcrit);
             if (rs.req_props.limit) {
                 q.limit(parseInt(rs.req_props.limit));
             }
-            if (rs.req_props.sort){
-                rs.req_props.sort.split(',').forEach(function(f){
-                    q.asc(f);
-                })
-            }
+
             q.exec(function (err, out) {
-                rs.send(out);
+                if (err){
+                    self.emit('process_error',rs, err);
+                } else {
+                    console.log('sending %s', util.inspect(out));
+                    rs.send(out);
+                }
             });
         } catch (err) {
-            this.on_post_process_error(rs, err);
+            console.log('query error: %s', util.inspect(err));
+            this.emit('process_error',rs, err);
         }
     },
 

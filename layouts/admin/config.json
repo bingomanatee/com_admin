@@ -27,7 +27,7 @@
         "/admin/stylesheets/less/responsive.less",
         "/css/admin-theme/jquery-ui-1.8.21.custom.css"
     ],
-    "static_prefix":"admin",
+    "static_prefix":"/admin",
     "javascript":[
         {
             "/js/libs":[

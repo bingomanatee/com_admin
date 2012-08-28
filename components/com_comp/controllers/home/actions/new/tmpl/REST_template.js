@@ -113,7 +113,7 @@ module.exports = {
         var self = this;
         this.model().add(input, function(err, output){
             if (err){
-                self.on_post_process_error(rs, err);
+                self.emit('process_error',rs, err);
             } else {
                 rs.send(output);
             }

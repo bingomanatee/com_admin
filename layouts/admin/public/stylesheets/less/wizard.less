@@ -1,0 +1,200 @@
+@dg_padding: 4px;
+@base_color: rgb(255, 175, 25);
+@dg_row_bg: lighten(@base_color, 30%);
+// rgb(255, 216, 65);
+@dg_head_bg: @base_color;
+
+@df_label_color: rgb(120, 120, 120);
+@df_input_border: rgb(150, 150, 150);
+@df_input_border_lt: lighten(@df_input_border, 20%);
+@wiz_input_padding: 0.5em 0.5em;
+@wiz_input_width: 20em;
+@wiz_th_width: 12em;
+@wiz_input_bg: hsl(331, 0.1, 1);
+
+@wiz_button_bg: rgb(255, 225, 0);
+@wiz_button_next_label: rgb(175, 0, 0);
+@wiz_button_padding: 0.25em 1.33em;
+@wiz_footer_color: saturate(@wiz_header_color, -33%);
+@wiz_header_color: hsl(33, 1, 0.6);
+@wiz_main_color: hsl(213, 0.5, 0.9);
+
+.border-radius(@radius: 5px){
+    -webkit-background-clip: padding-box;
+    -webkit-border-radius: @radius;
+    -moz-background-clip: padding-box;
+    -moz-border-radius: @radius;
+    border-radius: @radius;
+    background-clip: padding-box;
+}
+
+.box-shadow(@horizontal: 0px, @vertical: 1px, @blur: 2px, @color: #CCC){
+    -webkit-box-shadow: @horizontal @vertical @blur @color;
+    -moz-box-shadow: @horizontal @vertical @blur @color;
+    box-shadow: @horizontal @vertical @blur @color;
+}
+
+.inset-box-shadow(@horizontal: 0px, @vertical: 1px, @blur: 2px, @color: #CCC){
+    -webkit-box-shadow: inset @horizontal @vertical @blur @color;
+    -moz-box-shadow: inset @horizontal @vertical @blur @color;
+    box-shadow: inset @horizontal @vertical @blur @color;
+}
+
+#maincolumn form.wizard {
+    h1 {
+        font-family: Arvo, Geneva, Helvetica, sans-serif;
+    }
+    font-family: Arvo, Geneva, Helvetica, Arial, sans-serif;
+    p {
+        font-family: Karla, Geneva, Helvetica, Arial, sans-serif;
+    }
+    section {
+
+        button {
+            .border-radius(0.25em);
+            border: 1px solid rgb(102, 102, 102);
+            min-width: @wiz_input_width / 2;
+            padding: @wiz_button_padding;
+            background-color: @wiz_button_bg;
+            min-width: 6em;
+            font-weight: bold;
+            margin-right: 0px;
+            text-shadow: 1px 1px 4px #FFF;
+            filter: "dropshadow(color=#FFF, offx=-1, offy=-1)";
+
+        }
+
+        figure.header {
+            font-family: Karla, Geneva, Helvetica, Arial, sans-serif;
+            margin-bottom: 0px;
+            padding: 0em;
+            background-color: @wiz_header_color;
+            ul {
+                margin: 0em;
+                padding: 0em 0.5em;
+                li {
+                    font-size: 80%;
+                    display: block;
+                    float: left;
+                    padding: 0.25em 1em;
+                    color: black;
+                    margin: 0px 0px 0px 0px;
+                    border: none;
+                    list-style: none;
+                }
+                li.future {
+                    visibility: hidden;
+                }
+                li.current {
+                    background-color: @wiz_main_color;
+                    font-weight: bold;
+                    color: black;
+                }
+                li.past {
+                    color: black;
+                    color: rgb(255, 255, 200);
+                }
+
+            }
+        }
+        section.wizard_main {
+            margin-top: 0em;
+            margin-bottom: 0em;
+            background-color: @wiz_main_color;
+            input[type="text"], input[type="password"], textarea, select {
+                color: black;
+                -webkit-appearance: none;
+                border: 1px solid lighten(@df_input_border, 20%);
+                border-bottom: 1px solid @df_input_border;
+                width: @wiz_input_width;
+                padding: @wiz_input_padding;
+                margin-bottom: 0.5em;
+                background-color: @wiz_input_bg;
+                .border-radius(0px);
+                font-family: Karla, Geneva, Helvetica, Arial, sans-serif;
+                font-size: 120%;
+            }
+
+        dl{
+            width: 100%;
+            font-family: Karla, Geneva, Helvetica, Arial, sans-serif;
+            margin: 0px;
+
+            dt {
+                font-weight: bold;
+                width: 15em;
+                text-align: right;
+                float: left;
+                clear: left;
+                display: block;
+            }
+            dd {
+                float: left;
+                width: 20em;
+                clear: right;
+                display: block;
+                margin-left: 0em;
+                padding-left: 1em;
+            }
+        }
+            table {
+                th {
+                    white-space: nowrap;
+                    padding: @wiz_input_padding;
+                    margin: 0em;
+                    margin-bottom: 0.5em;
+                    min-width: @wiz_th_width;
+                    text-align: right;
+                    border: 1px solid transparent;
+                    font-size: 120%;
+                    vertical-align: top;
+                }
+                td {
+                    padding: 0px;
+                    margin: 0px;
+                }
+            }
+        }
+
+        figure.footer {
+            margin-top: 0em;
+            position: relative;
+            height: 3em;
+            padding: 0em;
+            background-color: @wiz_footer_color;
+
+            button {
+                font-family: Arvo, Geneva, Helvetica, Arial, sans-serif;
+                span {
+                    display: none;
+                }
+                text-align: center;
+                padding: 0px;
+                width: 30%;
+                position: absolute;
+                border: none;
+                background-position: middle center;
+                background-color: transparent !important;
+                background-repeat: no-repeat !important;
+                height: 32px;
+                min-width: 200px;
+                font-weight: bold;
+                font-size: 130%;
+                margin: 0.5em;
+                display: block;
+                color: blue;
+                line-height: 100%;
+                vertical-align: text-top;
+            }
+            button.next {
+                background-image: url('/admin/img/wizard/next.png');
+                right: 1em;
+            }
+            button.prev {
+                background-image: url('/admin/img/wizard/prev.png');
+                color: rgb(50, 50, 50);
+                left: 1em;
+            }
+        }
+    }
+}
