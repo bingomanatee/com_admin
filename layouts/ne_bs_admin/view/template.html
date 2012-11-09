@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title><%= layout_options.site_title %></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+<% if (nav){ // this is a pretty lame hack, Twitter...
+ %>
+    <style type="text/css">
+
+    @media (min-width: 979px) {
+       body {
+         padding-top: 60px;
+         padding-bottom: 40px;
+       }
+       .sidebar-nav {
+         padding: 9px 0;
+       }
+    }
+     </style>
+    <% } else { %>
+    <style type="text/css">
+       body {
+         padding-top: 0em;
+         padding-bottom: 0em;
+       }
+       .sidebar-nav {
+         padding: 9px 0;
+       }
+     </style>
+    <% } %>
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+    <!-- Stylesheets -->
+    <%- partial("css.html", css) %>
+
+    <!-- Scripts -->
+    <%- partial("js.html", javascript_head) %>
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="/ne_bs/img/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144"
+          href="/ne_bs/img/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114"
+          href="/ne_bs/img/assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72"
+          href="/ne_bs/img/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed"
+          href="/ne_bs/img/ico/apple-touch-icon-57-precomposed.png">
+
+</head>
+<body>
+<% if (nav) { %>
+<%- partial("nav.html", {nav: nav}) %>
+<% } %>
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span2">
+            <% if (menus.member){
+            %><%- partial('sidebar.html', {menu: menus.member}) %><%
+            };
+            if (menus.admin){
+            %><%- partial('sidebar.html', {menu: menus.admin}) %><%
+            }
+            if (menus.nav){
+            %><%- partial('sidebar.html', {menu: menus.nav}) %><%
+            }
+            %>
+        </div>
+        <div class="span10">
+
+            <% if (hero) {%>
+            <%- partial('hero.html', {hero: hero}) %>
+            <% } //  hero
+            %>
+            <%- helpers.flash() %>
+          <%- body %>
+        </div>
+        <!--/span-->
+    </div>
+    <!--/row-->
+
+    <hr>
+
+    <footer>
+        <p style="text-align: center">&copy; <%= layout_options.company_name %> <%= new Date().getFullYear() %></p>
+    </footer>
+
+</div>
+<!--/.fluid-container-->
+<!-- Modal -->
+<div class="modal" id="template_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none" >
+</div>
+<!--[if lt IE 7]>
+<p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser
+    today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better
+    experience this site.</p>
+<![endif]-->
+
+<!-- Scripts -->
+<%- partial("js.html", javascript) %>
+<script>window.jQuery || document.write('<script src="/ne_bs/js/vendor/jquery-1.8.0.min.js"><\/script>')</script>
+
+<!-- Google Analytics: change UA-XXXXX-X to be your site's ID. --
+<script>
+   var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+   (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+   g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+   s.parentNode.insertBefore(g,s)}(document,'script'));
+</script -->
+</body>
+</html>

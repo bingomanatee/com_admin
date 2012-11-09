@@ -1,0 +1,7 @@
+<a href="<%- item.link ? item.link: '#template_modal' %>" data-toggle="modal" onclick="$('<%- item.modal ? item.modal: '#template_modal' %>').load(
+'<%- item.link %>',
+ function(){
+ <% if (item.script) { %>
+ $.getScript('<%- item.script %>');
+  <% } else { %> $('<%- item.modal ? item.modal: '#template_modal' %>').modal('show'); <%} %>
+  }); return false"><%- item.label %></a>

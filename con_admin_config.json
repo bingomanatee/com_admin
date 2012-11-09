@@ -1,9 +1,0 @@
-{
-    "tasks": [
-    "admin"
-    ],
-
-    "javascript": [
-        "/admin/js/util/utils.js"
-    ]
-}

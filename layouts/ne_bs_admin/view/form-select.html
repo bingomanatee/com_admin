@@ -1,0 +1,12 @@
+<select name="<%- field.name %>"
+<% if (field.class){ %> class="<%= field.class %>" <% } // if class
+   if (field.model){ %> ng-model:"<%- field.model %>" /><% } // if model
+   if (field.id){%> id="<%-field.id %>"<% } %>
+><% if field.options { %>
+<% field.options.forEach(function(o){ %>
+<option value="<%- o.value %>"><%- o.label %></option>
+<% }) // options
+%>
+<% } // if options
+%>
+</select>

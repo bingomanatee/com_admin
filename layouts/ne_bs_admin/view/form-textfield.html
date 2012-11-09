@@ -1,0 +1,5 @@
+<input type="text" name="<%- field.name %>"
+<% ['value','id', 'readonly'].forEach(function(k){
+        if (field.hasOwnProperty(k)){ %> <%= k %>="<%- field[k] %>" <% } // has k
+        }) // each field
+        %> />

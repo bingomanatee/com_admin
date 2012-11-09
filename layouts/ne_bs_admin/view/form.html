@@ -1,0 +1,40 @@
+<form <% if(form.name){ %>name="<%= form.name %>" <%} // if name
+if (form.id){%> id="<%-form.id %>"<% } %>
+method="<%= form.method ? form.method : 'POST' %>"
+action="<%- form.action %>" class="form">
+<table>
+    <tbody>
+
+    <% form.fields.forEach(function(field){ %>
+    <tr>
+        <th style="padding: 0.75em; text-align: right; min-width: 10em"><%= field.label %></th>
+        <td style="padding: 0.75em">
+            <% switch (field.type){
+            case 'text': %>
+        <%- partial('form-textfield.html', {field: field}) %>
+        <%
+            break;
+            case 'textarea':
+            break;
+            case 'submit':
+            break;
+            } // end switch
+            %>
+        </td>
+    </tr>
+    <% }) // end foreach
+    %>
+    </tbody>
+
+    <tfoot>
+    <tr>
+        <th>&nbsp;</th>
+        <td style="padding: 0.75em">
+            <button class="btn" type="submit"><%= form.submit_label? form.submit_label : 'Submit' %></button>
+        </td>
+    </tr>
+    </tfoot>
+</table>
+
+
+</form>

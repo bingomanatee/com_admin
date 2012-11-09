@@ -1,0 +1,211 @@
+@dg_padding: 4px;
+@base_color: rgb(255, 175, 25);
+@dg_row_bg: lighten(@base_color, 30%);
+// rgb(255, 216, 65);
+@dg_head_bg: @base_color;
+
+@df_label_color: rgb(120, 120, 120);
+@df_input_border: rgb(150, 150, 150);
+@df_input_border_lt: lighten(@df_input_border, 20%);
+@wiz_input_padding: 0.5em 0.5em;
+@wiz_input_width: 20em;
+@wiz_th_width: 12em;
+@wiz_input_bg: hsl(331, 0.1, 1);
+
+@wiz_button_bg: hsl(200, 0.4, 0.5);
+@wiz_button_tab_bg: darken(hsla(200, 0.4, 0.95, 0.5), 25%);
+@wiz_button_tab_bg2: lighten(hsla(200, 0.4, 0.95, 0), 50%);
+@wiz_button_next_label: rgb(175, 0, 0);
+@wiz_button_padding: 0.25em 1.33em;
+@wiz_footer_color: saturate(@wiz_header_color, -33%);
+@wiz_header_color: hsl(33, 1, 0.6);
+@wiz_main_color: hsl(200, 0.4, 0.95);
+
+.border-radius(@radius: 5px){
+    -webkit-background-clip: padding-box;
+    -webkit-border-radius: @radius;
+    -moz-background-clip: padding-box;
+    -moz-border-radius: @radius;
+    border-radius: @radius;
+    background-clip: padding-box;
+}
+
+.box-shadow(@horizontal: 0px, @vertical: 1px, @blur: 2px, @color: #CCC){
+    -webkit-box-shadow: @horizontal @vertical @blur @color;
+    -moz-box-shadow: @horizontal @vertical @blur @color;
+    box-shadow: @horizontal @vertical @blur @color;
+}
+
+.inset-box-shadow(@horizontal: 0px, @vertical: 1px, @blur: 2px, @color: #CCC){
+    -webkit-box-shadow: inset @horizontal @vertical @blur @color;
+    -moz-box-shadow: inset @horizontal @vertical @blur @color;
+    box-shadow: inset @horizontal @vertical @blur @color;
+}
+
+.gradient(@color: #F5F5F5, @start: #EEE, @stop: #FFF) {
+  background: @color;
+  background: -webkit-gradient(linear,
+                               left bottom,
+                               left top,
+                               color-stop(0, @start),
+                               color-stop(1, @stop));
+  background: -ms-linear-gradient(bottom,
+                                  @start,
+                                  @stop);
+  background: -moz-linear-gradient(center bottom,
+                                   @start 0%,
+                                   @stop 100%);
+}
+
+form.wizard {
+    padding: 0px;
+    margin: 0px;
+    h1 {
+        margin: 0px;
+        padding: 0px;
+        margin-bottom: 1em;
+    }
+    section {
+        padding: 0px;
+        margin: 0px;
+    }
+    section.header {
+        margin-bottom: 0px;
+        padding: 0em;
+        .gradient(rgba(0,0,0,0), @wiz_button_tab_bg, @wiz_button_tab_bg2);
+        ul {
+            margin: 0em;
+            padding: 0em;
+            li {
+                font-size: 80%;
+                display: block;
+                float: left;
+                padding: 0.25em 1em;
+                color: black;
+                margin: 0px 0px 0px 0px;
+                border: none;
+                list-style: none;
+            }
+            li.future {
+                visibility: hidden;
+            }
+            li.current {
+                background-color: @wiz_main_color;
+                font-weight: bold;
+                color: black;
+            }
+            li.past {
+                color: black;
+                color: rgb(255, 255, 200);
+            }
+
+        }
+    }
+    section.wizard_main {
+        margin: 0em;
+        padding: 1.5em;
+        background-color: @wiz_main_color;
+        input[type="text"], input[type="password"], textarea, select {
+            color: black;
+            -webkit-appearance: none;
+            border: 1px solid lighten(@df_input_border, 20%);
+            border-bottom: 1px solid @df_input_border;
+            width: @wiz_input_width;
+            padding: @wiz_input_padding;
+            margin-bottom: 0.5em;
+            background-color: @wiz_input_bg;
+            .border-radius(0px);
+            font-size: 120%;
+        }
+
+        h2 {
+            margin-top: 0px;
+            padding: 0px;
+        }
+        dl {
+            width: 100%;
+            margin: 0px;
+
+            dt {
+                font-weight: bold;
+                width: 15em;
+                text-align: right;
+                float: left;
+                clear: left;
+                display: block;
+            }
+            dd {
+                float: left;
+                width: 20em;
+                clear: right;
+                display: block;
+                margin-left: 0em;
+                padding-left: 1em;
+            }
+        }
+        table {
+            th {
+                white-space: nowrap;
+                padding: @wiz_input_padding;
+                margin: 0em;
+                margin-bottom: 0.5em;
+                min-width: @wiz_th_width;
+                text-align: right;
+                border: 1px solid transparent;
+                font-size: 120%;
+                vertical-align: top;
+            }
+            td {
+                padding: 0px;
+                margin: 0px;
+            }
+        }
+    }
+
+    section.footer {
+        margin-top: 0em;
+        position: relative;
+        height: 3em;
+        padding: 0em;
+        .gradient(rgba(0,0,0,0), @wiz_button_tab_bg2, @wiz_button_tab_bg);
+
+        button {
+            span {
+                display: none;
+            }
+            text-align: center;
+            padding: 0px;
+            width: 30%;
+            position: absolute;
+            border: none;
+            background-position: middle center;
+            background-color: transparent !important;
+            background-repeat: no-repeat !important;
+            height: 40px;
+            font-weight: bold;
+            font-size: 130%;
+            margin: 0.5em;
+            display: block;
+            line-height: 100%;
+            vertical-align: text-top;
+        }
+        button.next {
+            background-image: url('/ne_bs_admin/img/wizard/next.png');
+            background-position: right center;
+            text-align: right;
+            padding-right: 40px;
+            color: blue;
+            right: 1em;
+        }
+        button.prev {
+            background-image: url('/ne_bs_admin/img/wizard/prev.png');
+            background-position: left center;
+            padding-left: 40px;
+            text-align: left;
+            color: rgb(100,100,100);
+            font-weight: normal;
+            left: 1em;
+        }
+
+    }
+}

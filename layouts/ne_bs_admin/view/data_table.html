@@ -1,0 +1,29 @@
+<% if (title){ %><h2><%= title %></h2><% } %>
+
+<table class="table table-condensed data_table">
+    <thead>
+    <tr>
+        <% columns.forEach(function(c){%>
+        <th <% if (c.width){ %> style="width:<%- c.width %>"<% } %>><%= c.label %></th>
+        <% }) %>
+
+    </tr>
+    </thead>
+
+    <tbody>
+    <% data.forEach(function(r){ %>
+    <tr>
+        <% columns.forEach(function(c, i){ %>
+        <% if (c.head){ %>
+        <th <% if (c.nowrap){ %> nowrap="nowrap" <% } %> ><%- c.template ? c.template(r, c):  r[c.field] %></th>
+        <% } else { %>
+        <td <% if (c.nowrap){ %> nowrap="nowrap" <% } %> ><%-  c.template ? c.template(r, c): r[c.field] %></td>
+        <% } // head
+        %>
+        <% }) // columns
+        %>
+    </tr>
+    <% }) // data
+    %>
+    </tbody>
+</table>

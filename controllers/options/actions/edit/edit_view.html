@@ -1,0 +1,14 @@
+<form class="form" method="post"  style="padding: 0px; margin: 0px"
+      action="/admin/option/<%- name %>/edit">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Edit Option &quot;<%= name %>&quot;</h3>
+    </div>
+    <div class="modal-body" style="min-height: 10em">
+        <label>Value</label><textarea rows="8" class="input-xxlarge" name="value"><%- (typeof value == 'string') ? value.replace(/"/g, '\"') : value %></textarea>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        <button class="btn btn-primary" type="submit">Save changes</button>
+    </div>
+</form>

@@ -1,0 +1,9 @@
+{
+    "get_route": "*/option/:name/edit",
+
+    "post_route": "*/option/:name/edit",
+
+    "method": "*",
+
+    "layout_name": "empty"
+}

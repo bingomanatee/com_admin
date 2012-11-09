@@ -1,0 +1,30 @@
+<!-- -------- START sidebar well --------
+<%- JSON.stringify(menu, true, 3) %>
+        -->
+<div class="well sidebar-nav">
+    <ul class="nav nav-list">
+        <% if (menu.title){ %><li class="nav-header"><%= menu.title %></li><% }
+        menu.items.forEach(function(section){
+        if (section.label) {
+        %><li class="nav-header">
+        <%= section.label %>
+    </li><% }
+        if (section.links){
+        section.links.forEach(function(item){
+        if (item.type == 'label') {
+        %><li class=""><%- item.label %></li><%
+        } else if (item.type == 'link') {
+        %><li><a href="<%- item.link %>"><%= item.label %></a></li><%
+        } else if (item.type == 'modal') {
+        %><%- partial('modal_link.html', {item: item}).replace(/\n/g, ' ')  %><%
+        } // end if
+        }) // end items
+        } else {
+        %>(no items)<%
+        }
+        %>
+        <% }) // end section
+        %>
+    </ul>
+</div>
+<!-- -------- END sidebar well -------- -->

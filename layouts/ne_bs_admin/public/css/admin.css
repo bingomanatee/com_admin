@@ -1,0 +1,78 @@
+
+/* **************** FIXES TO BUTTON PRIMARY HOVER ********************* */
+
+.btn {
+    display: inline-block;
+    padding: 4px 10px 4px;
+    margin: 5px 5px 6px;
+    line-height: 18px;
+}
+
+.btn-primary,
+.btn-primary:hover {
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    color: #ffffff;
+}
+
+.btn-primary:active {
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.btn-primary {
+    background-color: #0074cc;
+    background-image: -moz-linear-gradient(top, #0088cc, #0055cc);
+    background-image: -ms-linear-gradient(top, #0088cc, #0055cc);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#0088cc), to(#0055cc));
+    background-image: -webkit-linear-gradient(top, #0088cc, #0055cc);
+    background-image: -o-linear-gradient(top, #0088cc, #0055cc);
+    background-image: linear-gradient(top, #0088cc, #0055cc);
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#0088cc', endColorstr = '#0055cc', GradientType = 0);
+    border-color: #0055cc #0055cc #003580;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    filter: progid:dximagetransform.microsoft.gradient(enabled = false);
+}
+
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary.disabled,
+.btn-primary[disabled] {
+    background-color: #0055cc;
+}
+
+.btn-primary:active,
+.btn-primary.active {
+    background-color: #004099;
+}
+
+[class^="icon-"],
+[class*=" icon-"] {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    margin-top: 1px;
+    *margin-right: .3em;
+    line-height: 14px;
+    vertical-align: text-top;
+    background-image: url("/ne_bs_wiki/img/glyphicons-halflings.png");
+    background-repeat: no-repeat;
+}
+
+.nav-tabs [class^="icon-"],
+.nav-tabs [class*=" icon-"] {
+
+    background-image: url("/ne_bs_wiki/img/glyphicons-halflings.png") !important;
+}
+/* White icons with optional class, or on hover/active states of certain elements */
+
+.icon-white,
+.btn-primary > [class^="icon-"],
+.btn-primary > [class*=" icon-"],
+.nav > .active > a > [class^="icon-"],
+.nav > .active > a > [class*=" icon-"],
+.dropdown-menu > li > a:hover > [class^="icon-"],
+.dropdown-menu > li > a:hover > [class*=" icon-"],
+.dropdown-menu > .active > a > [class^="icon-"],
+.dropdown-menu > .active > a > [class*=" icon-"] {
+    background-image: url("/ne_bs_wiki/img/glyphicons-halflings-white.png");
+}

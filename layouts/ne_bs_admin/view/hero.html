@@ -1,0 +1,10 @@
+<div class="hero-unit">
+    <h1><%- hero.title %></h1>
+
+    <p><%- hero.text %></p>
+    <% if (hero.more){ %>
+        <p><a class="btn btn-primary btn-large"
+              href="<%- hero.more.link %>">
+            <%- hero.more.title %></a></p>
+    <% } %>
+</div>
